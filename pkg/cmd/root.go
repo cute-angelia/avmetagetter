@@ -94,8 +94,10 @@ func (e *Executor) packProcess(file string, wg *util.WaitGroup) {
 	if err != nil {
 		// 输出错误
 		fmt.Printf("文件: [%s] 刮削失败, 错误原因: %s\n", path.Base(file), err)
+
+		// 不转移文件
 		// 恢复文件
-		util.FailFile(file, e.cfg.Path.Fail)
+		// util.FailFile(file, e.cfg.Path.Fail)
 
 		// 进程
 		wg.Done()
