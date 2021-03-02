@@ -12,6 +12,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var flagpath string
+
 func (e *Executor) initRoot() {
 	e.rootCmd = &cobra.Command{
 		Use:   "AVMeta",
@@ -22,6 +24,8 @@ AVMeta 是一款使用 Golang 编写的跨平台 AV 元数据刮削器
 并生成对应媒体库元数据文件`,
 		Run: e.rootRunFunc,
 	}
+
+	e.rootCmd.Flags().StringVarP(&flagpath, "path", "p", "", "Source directory to read from")
 }
 
 func (e *Executor) setTemplate() {
@@ -48,6 +52,12 @@ func (e *Executor) setTemplate() {
 func (e *Executor) rootRunFunc(_ *cobra.Command, _ []string) {
 	// 获取当前执行路径
 	curDir := util.GetRunPath()
+
+	if len(flagpath) > 0 {
+		curDir = flagpath
+	}
+
+	log.Println("当前地址", curDir)
 
 	// 列当前目录
 	files, err := util.WalkDir(curDir, e.cfg.Path.Success, e.cfg.Path.Fail)
