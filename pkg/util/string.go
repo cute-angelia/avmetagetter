@@ -1,8 +1,10 @@
 package util
 
 import (
+	"log"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -26,6 +28,16 @@ func GetCode(filename, filter string) string {
 	filename = strings.ReplaceAll(filename, ".", "-")
 	// 过滤空格
 	filename = strings.TrimSpace(filename)
+
+	// 直接正则获取
+	re := regexp.MustCompile(`[a-zA-Z]+-\d{2,10}`)
+	regno := re.FindAllString(filename, -1)
+
+	if len(regno) > 0 {
+		filename = regno[0]
+	}
+
+	log.Printf("GetCode: %s", filename)
 
 	return filename
 }
