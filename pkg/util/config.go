@@ -11,10 +11,12 @@ type BaseStruct struct {
 
 // PathStruct 配置信息路径节点
 type PathStruct struct {
-	Success   string // 成功存储目录
-	Fail      string // 失败存储目录
-	Directory string // 影片存储路径格式
-	Filter    string // 文件名过滤规则
+	PathIn     string // 执行目录
+	IsTransfer bool   // 是否转移视频到成功和失败目录， 只想重新搜刮，不像转移视频
+	Success    string // 成功存储目录
+	Fail       string // 失败存储目录
+	Directory  string // 影片存储路径格式
+	Filter     string // 文件名过滤规则
 }
 
 // MediaStruct 配置信息媒体库节点
@@ -87,6 +89,7 @@ func WriteConfig() (*ConfigStruct, error) {
 			Proxy: "",
 		},
 		Path: PathStruct{
+			PathIn:    "",
 			Success:   "success",
 			Fail:      "fail",
 			Directory: "{actor}/{year}/{number}",

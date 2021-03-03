@@ -30,12 +30,8 @@ func WalkDir(dirPath, success, fail string) ([]string, error) {
 		}
 
 		// 检测是否为过滤目录
-		if strings.Contains(
-			strings.ToUpper(filePath),
-			strings.ToUpper(success)) ||
-			strings.Contains(
-				strings.ToUpper(filePath),
-				strings.ToUpper(fail)) {
+		if strings.Index(strings.ToUpper(filePath), strings.ToUpper(success)) == 0 && len(success) > 0 ||
+			strings.Index(strings.ToUpper(filePath), strings.ToUpper(fail)) == 0 && len(fail) > 0 {
 			return nil
 		}
 

@@ -187,6 +187,10 @@ AVMeta actress put
 
 ```bash
 AVMeta
+
+-p=指定目录
+-t=false 是否转移：场景： 针对某个目录重新刮削， 不移动视频，图片保存在当前文件夹
+
 ```
 
 #### NFO刮削

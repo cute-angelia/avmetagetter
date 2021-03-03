@@ -12,7 +12,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var flagpath string
+var pathin string
+var isTransfer bool
 
 func (e *Executor) initRoot() {
 	e.rootCmd = &cobra.Command{
@@ -25,7 +26,8 @@ AVMeta 是一款使用 Golang 编写的跨平台 AV 元数据刮削器
 		Run: e.rootRunFunc,
 	}
 
-	e.rootCmd.Flags().StringVarP(&flagpath, "path", "p", "", "Source directory to read from")
+	e.rootCmd.Flags().StringVarP(&pathin, "path", "p", "", "需要搜刮的路径")
+	e.rootCmd.Flags().BoolVarP(&isTransfer, "isTransfer", "t", true, "成功后转移到配置的success路径")
 }
 
 func (e *Executor) setTemplate() {
@@ -50,17 +52,20 @@ func (e *Executor) setTemplate() {
 
 // root命令执行函数
 func (e *Executor) rootRunFunc(_ *cobra.Command, _ []string) {
+	// 赋值 start
 	// 获取当前执行路径
-	curDir := util.GetRunPath()
-
-	if len(flagpath) > 0 {
-		curDir = flagpath
+	if len(pathin) == 0 {
+		pathin = util.GetRunPath()
 	}
 
-	log.Println("当前地址", curDir)
+	e.cfg.Path.PathIn = pathin
+	e.cfg.Path.IsTransfer = isTransfer
+	// 赋值 end
+
+	log.Println(fmt.Sprintf("当前路径：%s, 成功路径： %s", pathin, e.cfg.Path.Success))
 
 	// 列当前目录
-	files, err := util.WalkDir(curDir, e.cfg.Path.Success, e.cfg.Path.Fail)
+	files, err := util.WalkDir(pathin, e.cfg.Path.Success, e.cfg.Path.Fail)
 	// 检测错误
 	if err != nil {
 		log.Fatalln(err)
@@ -72,7 +77,7 @@ func (e *Executor) rootRunFunc(_ *cobra.Command, _ []string) {
 	fmt.Printf("\n共探索到 %d 个视频文件, 开始刮削整理...\n\n", count)
 
 	// 初始化进程
-	wg := util.NewWaitGroup(2)
+	wg := util.NewWaitGroup(10)
 
 	// 循环视频文件列表
 	for _, file := range files {

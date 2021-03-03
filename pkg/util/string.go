@@ -1,6 +1,7 @@
 package util
 
 import (
+	"github.com/thinkeridea/go-extend/exstrings"
 	"log"
 	"path"
 	"path/filepath"
@@ -47,8 +48,12 @@ func GetCode(filename, filter string) string {
 // replaceStr map对象，通过转换后的媒体各项数据，
 // cfg 配置信息，用以读取保存路径规则。
 func GetNumberPath(replaceStr map[string]string, cfg *ConfigStruct) string {
-	// 获取运行路径
-	base := GetRunPath()
+	base := cfg.Path.PathIn
+	if len(cfg.Path.PathIn) == 0 {
+		// 获取运行路径
+		base = GetRunPath()
+	}
+
 	// 组合路径
 	base = base + "/" + cfg.Path.Success
 	// 获取保存规则
@@ -56,8 +61,8 @@ func GetNumberPath(replaceStr map[string]string, cfg *ConfigStruct) string {
 	// 循环替换
 	for key, val := range replaceStr {
 		// 检查内容长度
-		if len(val) > 50 {
-			val = "ManyMany..."
+		if len(val) > 80 {
+			val = exstrings.SubString(val, 0, 80)
 		}
 		rule = strings.ReplaceAll(rule, key, val)
 	}

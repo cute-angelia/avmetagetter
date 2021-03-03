@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/ylqjgm/AVMeta/pkg/scraper"
 )
@@ -185,6 +186,9 @@ func (m *Media) ConvertMap() map[string]string {
 	// 替换发行时间
 	replaceMap["{release}"] = m.Release
 	// 替换年份
+	if m.Year == "" {
+		m.Year = time.Now().Format("2006")
+	}
 	replaceMap["{year}"] = m.Year
 	// 替换月份
 	replaceMap["{month}"] = m.Month

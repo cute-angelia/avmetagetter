@@ -16,6 +16,7 @@ require (
 	github.com/spf13/viper v1.6.2
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/tencentcloud/tencentcloud-sdk-go v3.0.126+incompatible
+	github.com/thinkeridea/go-extend v1.3.2
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
 	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
 	golang.org/x/text v0.3.2

@@ -3,6 +3,7 @@ package media
 import (
 	"encoding/xml"
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"regexp"
@@ -54,16 +55,20 @@ func packNfo(file string, cfg *util.ConfigStruct) (*Media, error) {
 	}
 
 	// 写入nfo
-	err = util.WriteFile(fmt.Sprintf("%s/%s.nfo", m.DirPath, m.Number), buff)
+	saveNfoPath := util.NewSave().GetSavePathInfo(cfg, fmt.Sprintf("%s/%s.nfo", m.DirPath, m.Number))
+	err = util.WriteFile(saveNfoPath, buff)
 	// 检查
 	if err != nil {
 		return nil, err
 	}
 
-	// 获取视频后缀
 	ext := path.Ext(file)
 	// 移动视频文件
-	err = util.MoveFile(file, fmt.Sprintf("%s/%s%s", m.DirPath, m.Number, ext))
+	savePath := util.NewSave().GetSavePathInfo(cfg, fmt.Sprintf("%s/%s%s", m.DirPath, m.Number, ext))
+	log.Println("move video", file, savePath)
+	if file != savePath {
+		err = util.MoveFile(file, savePath)
+	}
 
 	return m, err
 }
@@ -106,7 +111,10 @@ func packVSMeta(file string, cfg *util.ConfigStruct) (*Media, error) {
 	os.Remove(fmt.Sprintf("%s/fanart.jpg", m.DirPath))
 
 	// 移动视频文件
-	err = util.MoveFile(file, fmt.Sprintf("%s/%s%s", m.DirPath, m.Number, ext))
+	savePath := util.NewSave().GetSavePathInfo(cfg, fmt.Sprintf("%s/%s%s", m.DirPath, m.Number, ext))
+	if file != savePath {
+		err = util.MoveFile(file, savePath)
+	}
 
 	return m, err
 }
@@ -130,26 +138,33 @@ func capture(file string, cfg *util.ConfigStruct) (*Media, error) {
 
 	// 获取准确目录
 	dirPath := util.GetNumberPath(m.ConvertMap(), cfg)
+
 	// 创建目录
-	err = os.MkdirAll(dirPath, os.ModePerm)
-	// 检查
-	if err != nil {
-		return nil, err
+	if cfg.Path.IsTransfer {
+		err = os.MkdirAll(dirPath, os.ModePerm)
+		// 检查
+		if err != nil {
+			return nil, err
+		}
 	}
+
 	// 赋值保存路径
 	m.DirPath = dirPath
 
 	// 获取图片后缀
 	ext := path.Ext(m.Cover)
+
 	// 下载图片
-	err = util.SavePhoto(m.Cover, fmt.Sprintf("%s/fanart.jpg", m.DirPath), cfg.Base.Proxy, !strings.EqualFold(strings.ToLower(ext), ".jpg"))
+	saveFanartPath := util.NewSave().GetSavePathInfo(cfg, fmt.Sprintf("%s/fanart.jpg", m.DirPath))
+	err = util.SavePhoto(m.Cover, saveFanartPath, cfg.Base.Proxy, !strings.EqualFold(strings.ToLower(ext), ".jpg"))
 	// 检查
 	if err != nil {
 		return nil, err
 	}
 
 	// 裁剪图片
-	err = util.PosterCover(fmt.Sprintf("%s/fanart.jpg", m.DirPath), fmt.Sprintf("%s/poster.jpg", m.DirPath), cfg)
+	savePosterPath := util.NewSave().GetSavePathInfo(cfg, fmt.Sprintf("%s/poster.jpg", m.DirPath))
+	err = util.PosterCover(saveFanartPath, savePosterPath, cfg)
 	// 检查
 	if err != nil {
 		return nil, err
@@ -212,13 +227,13 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	// 定义一个没有正则匹配的刮削对象数组
 	ss := []captures{
 		{
-			Name: "JavDB",
-			S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
-			R:    nil,
-		},
-		{
 			Name: "JavBus",
 			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Proxy),
+			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+		},
+		{
+			Name: "JavDB",
+			S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
 			R:    nil,
 		},
 	}
@@ -234,6 +249,7 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 		if scr.R.MatchString(code) {
 			// 刮削赋值
 			s = scr.S
+			log.Println("刮削对象:", code, scr.Name)
 			// 刮削
 			err = s.Fetch(code)
 			break
@@ -246,6 +262,8 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 		for _, sc := range ss {
 			// 刮削赋值
 			s = sc.S
+
+			log.Println("刮削对象2:", code, sc.Name)
 			// 刮削
 			if err = s.Fetch(code); err == nil {
 				break
