@@ -60,6 +60,13 @@ func (e *Executor) rootRunFunc(_ *cobra.Command, _ []string) {
 
 	e.cfg.Path.PathIn = pathin
 	e.cfg.Path.IsTransfer = isTransfer
+	if len(e.cfg.Path.Success) > 0 && e.cfg.Path.Success[0:1] != "/" {
+		e.cfg.Path.Success = fmt.Sprintf("%s/%s", e.cfg.Path.PathIn, e.cfg.Path.Success)
+	}
+	if len(e.cfg.Path.Fail) > 0 && e.cfg.Path.Fail[0:1] != "/" {
+		e.cfg.Path.Fail = fmt.Sprintf("%s/%s", e.cfg.Path.PathIn, e.cfg.Path.Fail)
+	}
+
 	// 赋值 end
 
 	log.Println(fmt.Sprintf("当前路径：%s, 成功路径： %s", pathin, e.cfg.Path.Success))

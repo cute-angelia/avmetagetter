@@ -48,14 +48,6 @@ func GetCode(filename, filter string) string {
 // replaceStr map对象，通过转换后的媒体各项数据，
 // cfg 配置信息，用以读取保存路径规则。
 func GetNumberPath(replaceStr map[string]string, cfg *ConfigStruct) string {
-	base := cfg.Path.PathIn
-	if len(cfg.Path.PathIn) == 0 {
-		// 获取运行路径
-		base = GetRunPath()
-	}
-
-	// 组合路径
-	base = base + "/" + cfg.Path.Success
 	// 获取保存规则
 	rule := cfg.Path.Directory
 	// 循环替换
@@ -76,7 +68,7 @@ func GetNumberPath(replaceStr map[string]string, cfg *ConfigStruct) string {
 	// 多余的反斜线
 	rule = strings.ReplaceAll(rule, "//", "/")
 
-	return base + "/" + rule
+	return cfg.Path.Success + "/" + rule
 }
 
 // CheckDomainPrefix 检查域名最后是否存在斜线并返回无斜线域名
