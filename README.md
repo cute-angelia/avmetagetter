@@ -50,6 +50,14 @@ AVMeta版本： v1.0.0
 文件/番号: [xxx.mp4/xxx] 刮削失败, 错误原因: xxx
 ```
 
+## 使用方法
+
+```
+AVMeta
+
+```
+
+
 ## 编译
 
 不想编译，可直接在 [发布页](https://github.com/ylqjgm/AVMeta/releases) 下载对应的最新预编译版本使用。
