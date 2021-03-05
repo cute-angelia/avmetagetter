@@ -49,6 +49,7 @@ func NewExecutor(version, commit, built string) *Executor {
 	e.initConfigFile()
 	e.initActress()
 	e.initVersion()
+	e.initNfo()
 
 	return e
 }

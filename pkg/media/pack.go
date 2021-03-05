@@ -48,7 +48,7 @@ func packNfo(file string, cfg *util.ConfigStruct) (*Media, error) {
 	}
 
 	// 转换为XML
-	buff, err := mediaToXML(m)
+	buff, err := MediaToXML(m)
 	// 检查
 	if err != nil {
 		return nil, err
@@ -281,7 +281,7 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 }
 
 // 转换为xml
-func mediaToXML(m *Media) ([]byte, error) {
+func MediaToXML(m *Media) ([]byte, error) {
 	// 转换
 	x, err := xml.MarshalIndent(m, "", "  ")
 	// 检查

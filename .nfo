@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<movie>
+  <title></title>
+  <sorttitle></sorttitle>
+  <num></num>
+  <studio></studio>
+  <maker></maker>
+  <director></director>
+  <release>2021-03-05 17:07:56</release>
+  <premiered>2021-03-05 17:07:56</premiered>
+  <year>2021</year>
+  <plot></plot>
+  <outline></outline>
+  <runtime></runtime>
+  <mpaa></mpaa>
+  <country></country>
+  <poster>poster.jpg</poster>
+  <thumb>poster.jpg</thumb>
+  <fanart>fanart.jpg</fanart>
+  <actor>
+    <name></name>
+    <thumb></thumb>
+  </actor>
+  <tag></tag>
+  <genre></genre>
+  <set></set>
+  <label></label>
+  <cover>fanart.jpg</cover>
+  <website></website>
+</movie>
