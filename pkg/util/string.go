@@ -31,7 +31,7 @@ func GetCode(filename, filter string) string {
 	filename = strings.TrimSpace(filename)
 
 	// 直接正则获取
-	re := regexp.MustCompile(`[a-zA-Z]+-\d{2,10}`)
+	re := regexp.MustCompile(`(\d+)?[a-zA-Z]+-\d{2,10}`)
 	regno := re.FindAllString(filename, -1)
 
 	if len(regno) > 0 {
