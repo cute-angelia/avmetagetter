@@ -46,7 +46,7 @@ func (e *Executor) initNfo() {
 	nfoCmd.Flags().StringVar(&nfo_mpaa, "mpaa", "xxx", "评级")
 	nfoCmd.Flags().StringVar(&nfo_cover, "cover", "", "封面")
 
-	re := time.Now().Format("2006-01-02 15:04:05")
+	re := time.Now().Format("2006-01-02")
 	nfoCmd.Flags().StringVar(&nfo_release, "release", re, "no")
 
 	e.rootCmd.AddCommand(nfoCmd)
