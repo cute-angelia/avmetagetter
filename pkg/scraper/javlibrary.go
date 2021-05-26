@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/ylqjgm/AVMeta/pkg/util"
@@ -44,7 +45,7 @@ func (s *JavlibraryScraper) Fetch(code string) error {
 			err = s.detail()
 			// 检查错误
 			if err != nil {
-				return fmt.Errorf("404 Not Found")
+				return err
 			}
 		}
 	}
@@ -63,13 +64,13 @@ func (s *JavlibraryScraper) detail() error {
 	if err != nil {
 		return err
 	}
+	s.root = root
 
 	// 查找是否获取到
-	if -1 == root.Find(`#video_id`).Index() {
+	if len(s.GetTitle()) == 0 {
+		log.Println(root.Html())
 		return fmt.Errorf("404 Not Found")
 	}
-
-	s.root = root
 
 	// 设置页面地址
 	s.uri = uri

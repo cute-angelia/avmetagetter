@@ -23,3 +23,5 @@ test
 AVMeta
 config.yaml
 *.nfo
+
+success/

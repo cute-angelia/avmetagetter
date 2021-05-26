@@ -233,14 +233,14 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 		},
 		{
 			Name: "Javlibrary",
-			S:    scraper.NewJavLibraryScraper(cfg.Base.Proxy),
+			S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
 			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
 		},
-		{
-			Name: "JavDB",
-			S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
-			R:    nil,
-		},
+		//{
+		//	Name: "JavDB",
+		//	S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
+		//	R:    nil,
+		//},
 	}
 
 	// 转换番号为小写
@@ -254,7 +254,7 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 		if scr.R.MatchString(code) {
 			// 刮削赋值
 			s = scr.S
-			log.Println("刮削对象:", code, scr.Name)
+			log.Println(scr.Name, "刮削对象:", code)
 			// 刮削
 			err = s.Fetch(code)
 			break
@@ -268,10 +268,12 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 			// 刮削赋值
 			s = sc.S
 
-			log.Println("刮削对象2:", code, sc.Name)
+			log.Println(sc.Name, "刮削对象:", code)
 			// 刮削
 			if err = s.Fetch(code); err == nil {
 				break
+			} else {
+				log.Println(sc.Name, "刮削对象: 失败", err.Error())
 			}
 		}
 	}

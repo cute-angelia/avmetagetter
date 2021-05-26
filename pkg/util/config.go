@@ -7,6 +7,7 @@ import (
 // BaseStruct 配置信息基础节点
 type BaseStruct struct {
 	Proxy string // 代理地址
+	Socket string // 代理地址
 }
 
 // PathStruct 配置信息路径节点

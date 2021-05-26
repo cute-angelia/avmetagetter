@@ -139,7 +139,7 @@ func GetRootNewGout(uri, proxy string, cookies []*http.Cookie, debug bool) (*goq
 
 	zgo := gout.GET(uri).Debug(debug)
 	if len(proxy) > 0 {
-		zgo.SetProxy(proxy)
+		zgo.SetSOCKS5(proxy)
 	}
 	err := zgo.SetHeader(gout.H{
 		"cookie":     cookies,
