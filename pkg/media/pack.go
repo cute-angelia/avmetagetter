@@ -232,6 +232,11 @@ func search(file string, cfg *util.ConfigStruct) (*Media, error) {
 			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
 		},
 		{
+			Name: "Javlibrary",
+			S:    scraper.NewJavLibraryScraper(cfg.Base.Proxy),
+			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+		},
+		{
 			Name: "JavDB",
 			S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
 			R:    nil,

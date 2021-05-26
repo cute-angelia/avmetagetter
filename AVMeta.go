@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/ylqjgm/AVMeta/pkg/cmd"
+	"log"
 )
 
 var (
@@ -11,6 +12,10 @@ var (
 )
 
 func main() {
+	// 设置 flag
+	flag := log.LstdFlags | log.Lshortfile | log.Lmsgprefix
+	log.SetFlags(flag)
+
 	e := cmd.NewExecutor(version, commit, built)
 
 	if err := e.Execute(); err != nil {

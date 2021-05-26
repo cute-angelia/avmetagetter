@@ -16,8 +16,10 @@ export GOPROXY = https://goproxy.io
 
 # Build
 
-build: AVMeta
 .PHONY: build
+build:
+	go build
+	AVMeta
 
 build_race:
 	go build -race -ldflags ${ldflags}

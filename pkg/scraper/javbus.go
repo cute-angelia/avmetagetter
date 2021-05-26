@@ -59,7 +59,7 @@ func (s *JavBusScraper) detail() error {
 	// 组合uri
 	uri := fmt.Sprintf("%s/%s", util.CheckDomainPrefix(s.Site), s.number)
 	// 获取节点
-	root, err := util.GetRoot(uri, s.Proxy, nil)
+	root, err := util.GetRootNewGout(uri, s.Proxy, nil, false)
 	// 检查错误
 	if err != nil {
 		return err
