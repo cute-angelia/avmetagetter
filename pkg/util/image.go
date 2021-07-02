@@ -214,7 +214,7 @@ func saveCover(path string, img image.Image) error {
 	// 如果是jpeg类型
 	if strings.EqualFold(ext, ".jpg") || strings.EqualFold(ext, ".jpeg") {
 		// jpeg图片编码
-		err = jpeg.Encode(f, img, &jpeg.Options{Quality: 80})
+		err = jpeg.Encode(f, img, &jpeg.Options{Quality: 100})
 	} else if strings.EqualFold(ext, ".png") { // png类型
 		// png图片编码
 		err = png.Encode(f, img)
