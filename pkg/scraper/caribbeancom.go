@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ylqjgm/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"

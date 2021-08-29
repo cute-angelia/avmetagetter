@@ -6,7 +6,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/ylqjgm/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 )
 
 // VSMeta 群晖元数据结构体

@@ -26,5 +26,5 @@
 - 项目创建
 
 
-[Unreleased]: https://github.com/ylqjgm/AVMeta/compare/v1.0.1...HEAD
-[v1.0.1]: https://github.com/ylqjgm/AVMeta/compare/v1.0.0...v1.0.1
+[Unreleased]: https://AVMeta/compare/v1.0.1...HEAD
+[v1.0.1]: https://AVMeta/compare/v1.0.0...v1.0.1

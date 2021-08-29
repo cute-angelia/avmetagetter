@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/ylqjgm/AVMeta/pkg/actress"
+	"AVMeta/pkg/actress"
 
 	"github.com/spf13/cobra"
 )

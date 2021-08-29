@@ -2,10 +2,9 @@ package scraper
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
-	"github.com/ylqjgm/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -68,7 +67,7 @@ func (s *JavlibraryScraper) detail() error {
 
 	// 查找是否获取到
 	if len(s.GetTitle()) == 0 {
-		log.Println(root.Html())
+		// log.Println(root.Html())
 		return fmt.Errorf("404 Not Found")
 	}
 

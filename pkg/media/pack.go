@@ -9,9 +9,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ylqjgm/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
-	"github.com/ylqjgm/AVMeta/pkg/scraper"
+	"AVMeta/pkg/scraper"
 )
 
 // 刮削对象
@@ -125,7 +125,7 @@ func packVSMeta(file string, cfg *util.ConfigStruct) (*Media, error) {
 // cfg ConfigStruct结构体，传入程序配置信息。
 func capture(file string, cfg *util.ConfigStruct) (*Media, error) {
 	// 搜索番号并获得刮削对象
-	m, err := search(file, cfg)
+	m, err := Search(file, cfg)
 	// 检查
 	if err != nil {
 		return nil, err
@@ -179,7 +179,7 @@ func capture(file string, cfg *util.ConfigStruct) (*Media, error) {
 }
 
 // 番号搜索
-func search(file string, cfg *util.ConfigStruct) (*Media, error) {
+func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	// 定义变量
 	var err error
 

@@ -1,4 +1,4 @@
-module github.com/ylqjgm/AVMeta
+module AVMeta
 
 go 1.14
 
@@ -22,3 +22,5 @@ require (
 	golang.org/x/text v0.3.2
 	gopkg.in/ini.v1 v1.52.0 // indirect
 )
+
+replace AVMeta => /Users/vanilla/gopath/src/AVMeta

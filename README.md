@@ -1,9 +1,9 @@
 # AVMeta
 
-![Build](https://github.com/ylqjgm/AVMeta/workflows/Build/badge.svg)
-![Release](https://github.com/ylqjgm/AVMeta/workflows/Release/badge.svg)
+![Build](https://AVMeta/workflows/Build/badge.svg)
+![Release](https://AVMeta/workflows/Release/badge.svg)
 [![codecov](https://codecov.io/gh/ylqjgm/AVMeta/branch/master/graph/badge.svg)](https://codecov.io/gh/ylqjgm/AVMeta)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ylqjgm/AVMeta)](https://goreportcard.com/report/github.com/ylqjgm/AVMeta)
+[![Go Report Card](https://goreportcard.com/badge/AVMeta)](https://goreportcard.com/report/AVMeta)
 ![GitHub](https://img.shields.io/github/license/ylqjgm/AVMeta)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/ylqjgm/AVMeta)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ylqjgm/AVMeta)
@@ -38,7 +38,7 @@ AV 元数据刮削器，使用 Golang 语言编写，具有多线程、全兼容
 > 方便整理AV电影而已。
 
 3. 为什么我使用不了？
-> 请以下方格式将错误信息填写到 [issue](https://github.com/ylqjgm/AVMeta/issues/new) 中。
+> 请以下方格式将错误信息填写到 [issue](https://AVMeta/issues/new) 中。
 
 ```bash
 操作系统： Windows 7 x64
@@ -60,14 +60,14 @@ AVMeta
 
 ## 编译
 
-不想编译，可直接在 [发布页](https://github.com/ylqjgm/AVMeta/releases) 下载对应的最新预编译版本使用。
+不想编译，可直接在 [发布页](https://AVMeta/releases) 下载对应的最新预编译版本使用。
 
 **若使用预编译程序，可跳过此步骤**
 
 1. 安装并配置 Golang + Git 开发环境， Golang 建议安装 1.13以上版本。
 2. 执行命令：
     ```bash
-   go get -u github.com/ylqjgm/AVMeta
+   go get -u AVMeta
     ```
 6. 至 `$GOPATH/bin` 目录下检查是否存在 `AVMeta` 可执行程序，并将 `$GOPATH/bin` 目录加入到环境变量中。
 

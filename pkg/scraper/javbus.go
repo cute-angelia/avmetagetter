@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ylqjgm/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -46,7 +46,7 @@ func (s *JavBusScraper) Fetch(code string) error {
 			err = s.detail()
 			// 检查错误
 			if err != nil {
-				return fmt.Errorf("404 Not Found")
+				return fmt.Errorf("404 Not Found %+v", err)
 			}
 		}
 	}
@@ -130,7 +130,7 @@ func (s *JavBusScraper) GetCover() string {
 	// 获取图片
 	fanart, _ := s.root.Find(`a.bigImage img`).Attr("src")
 
-	return fanart
+	return getFullImg(fanart, s.Site)
 }
 
 // GetActors 获取演员
@@ -142,6 +142,8 @@ func (s *JavBusScraper) GetActors() map[string]string {
 	s.root.Find(`div.star-box li > a`).Each(func(i int, item *goquery.Selection) {
 		// 获取演员图片
 		img, _ := item.Find(`img`).Attr("src")
+		img = getFullImg(img, s.Site)
+
 		// 获取演员名字
 		name, _ := item.Find("img").Attr("title")
 
@@ -160,4 +162,12 @@ func (s *JavBusScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *JavBusScraper) GetNumber() string {
 	return s.number
+}
+
+func getFullImg(imgsrc string, site string) string {
+	//log.Println(imgsrc)
+	firstindex := strings.Index(imgsrc, "/")
+	imgsrc = imgsrc[firstindex+1 : len(imgsrc)]
+	//log.Println("==> ", fmt.Sprintf("%s%s", site, imgsrc))
+	return fmt.Sprintf("%s%s", site, imgsrc)
 }
