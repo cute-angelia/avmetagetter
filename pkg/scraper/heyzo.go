@@ -26,6 +26,7 @@ type HeyzoScraper struct {
 // json结构
 type heyzoJSON struct {
 	Name            string `json:"name"`
+	Description string `json:"description"`
 	Image           string `json:"image"`
 	DateCreated     string `json:"dateCreated"`
 	Duration        string `json:"duration"`
