@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"AVMeta/pkg/util"
+	"github.com/cute-angelia/AVMeta/pkg/util"
 
 	"github.com/schollz/progressbar/v2"
 )

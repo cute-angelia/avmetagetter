@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"AVMeta/pkg/scraper"
+	"github.com/cute-angelia/AVMeta/pkg/scraper"
 )
 
 // Media Nfo信息结构，

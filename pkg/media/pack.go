@@ -9,9 +9,9 @@ import (
 	"regexp"
 	"strings"
 
-	"AVMeta/pkg/util"
+	"github.com/cute-angelia/AVMeta/pkg/util"
 
-	"AVMeta/pkg/scraper"
+	"github.com/cute-angelia/AVMeta/pkg/scraper"
 )
 
 // 刮削对象

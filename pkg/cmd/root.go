@@ -5,9 +5,9 @@ import (
 	"log"
 	"path"
 
-	"AVMeta/pkg/media"
+	"github.com/cute-angelia/AVMeta/pkg/media"
 
-	"AVMeta/pkg/util"
+	"github.com/cute-angelia/AVMeta/pkg/util"
 
 	"github.com/spf13/cobra"
 )
