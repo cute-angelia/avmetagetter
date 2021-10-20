@@ -23,4 +23,4 @@ require (
 	gopkg.in/ini.v1 v1.52.0 // indirect
 )
 
-replace AVMeta => /Users/vanilla/gopath/src/AVMeta
+// replace AVMeta => /Users/vanilla/gopath/src/AVMeta
