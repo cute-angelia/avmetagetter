@@ -1,5 +1,7 @@
 # AVMeta
 
+> 部署在内网软路由
+
 ![Build](https://AVMeta/workflows/Build/badge.svg)
 ![Release](https://AVMeta/workflows/Release/badge.svg)
 [![codecov](https://codecov.io/gh/ylqjgm/AVMeta/branch/master/graph/badge.svg)](https://codecov.io/gh/ylqjgm/AVMeta)
