@@ -21,7 +21,6 @@ push.sh
 .vscode/
 test
 AVMeta
-config.yaml
 *.nfo
 
 success/
