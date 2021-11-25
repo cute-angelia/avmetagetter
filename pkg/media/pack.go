@@ -219,6 +219,11 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 			R:    regexp.MustCompile(`^(siro|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
 		},
 		{
+			Name: "JavBus",
+			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Proxy),
+			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+		},
+		{
 			Name: "DMM",
 			S:    scraper.NewDMMScraper(cfg.Base.Proxy),
 			R:    regexp.MustCompile(`[a-zA-Z]{2,5}[-|\s\S][0-9]{3,4}`),
@@ -226,11 +231,6 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	}
 	// 定义一个没有正则匹配的刮削对象数组
 	ss := []captures{
-		{
-			Name: "JavBus",
-			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Proxy),
-			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
-		},
 		{
 			Name: "Javlibrary",
 			S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
