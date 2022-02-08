@@ -219,15 +219,20 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 			R:    regexp.MustCompile(`^fc2-[0-9]{6,7}`),
 		},
 		{
+			Name: "JavBus",
+			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Proxy),
+			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+		},
+		{
+			Name: "Javlibrary",
+			S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
+			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+		},
+		{
 			Name: "Siro",
 			S:    scraper.NewSiroScraper(cfg.Base.Proxy),
 			//R:    regexp.MustCompile(`^(siro|abw|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
 			R:    regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
-		},
-		{
-			Name: "JavBus",
-			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Proxy),
-			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
 		},
 		{
 			Name: "DMM",
@@ -237,11 +242,11 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	}
 	// 定义一个没有正则匹配的刮削对象数组
 	ss := []captures{
-		{
-			Name: "Javlibrary",
-			S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
-			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
-		},
+		//{
+		//	Name: "Javlibrary",
+		//	S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
+		//	R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+		//},
 		//{
 		//	Name: "JavDB",
 		//	S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
