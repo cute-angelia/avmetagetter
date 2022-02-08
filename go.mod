@@ -1,4 +1,4 @@
-module AVMeta
+module github.com/cute-angelia/AVMeta
 
 go 1.16
 

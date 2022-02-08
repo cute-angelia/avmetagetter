@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"AVMeta/pkg/media"
-	"AVMeta/pkg/util"
+	"github.com/cute-angelia/AVMeta/pkg/media"
+	"github.com/cute-angelia/AVMeta/pkg/util"
 	"log"
 	"strings"
 	"time"

@@ -3,11 +3,11 @@ package media
 import (
 	"encoding/xml"
 	"fmt"
+	"github.com/cute-angelia/AVMeta/pkg/scraper"
 	"regexp"
 	"strings"
 	"time"
 
-	"AVMeta/pkg/scraper"
 )
 
 // Media Nfo信息结构，

@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"AVMeta/pkg/util"
+	"github.com/cute-angelia/AVMeta/pkg/util"
 )
 
 // Emby Emby媒体库结构体

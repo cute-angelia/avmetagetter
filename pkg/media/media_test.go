@@ -1,7 +1,7 @@
 package media
 
 import (
-	"AVMeta/pkg/util"
+	"github.com/cute-angelia/AVMeta/pkg/util"
 	"github.com/cute-angelia/go-utils/syntax/ijson"
 	"log"
 	"testing"
