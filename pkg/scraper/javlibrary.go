@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -179,4 +179,16 @@ func (s *JavlibraryScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *JavlibraryScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *JavlibraryScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	s.root.Find(`.previewthumbs img`).Each(func(i int, selection *goquery.Selection) {
+		if v, ok := selection.Attr("src"); ok {
+			sample = append(sample, util.GetLargeSample(v))
+		}
+	})
+	return sample
 }

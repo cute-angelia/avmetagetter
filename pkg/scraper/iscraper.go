@@ -40,4 +40,8 @@ type IScraper interface {
 	GetCover() string
 	// GetActors 从刮削结果中获取影片演员
 	GetActors() map[string]string
+
+	// 获取样图
+	GetSample() []string
 }
+

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -216,4 +216,11 @@ func (s *TokyoHotScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *TokyoHotScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *TokyoHotScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	return sample
 }

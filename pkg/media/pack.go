@@ -9,9 +9,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
-	"github.com/cute-angelia/AVMeta/pkg/scraper"
+	"AVMeta/pkg/scraper"
 )
 
 // 刮削对象
@@ -214,9 +214,15 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 			R:    regexp.MustCompile(`^fc2-[0-9]{6,7}`),
 		},
 		{
+			Name: "FC2Club",
+			S:    scraper.NewFC2ClubScraper(cfg.Base.Proxy),
+			R:    regexp.MustCompile(`^fc2-[0-9]{6,7}`),
+		},
+		{
 			Name: "Siro",
 			S:    scraper.NewSiroScraper(cfg.Base.Proxy),
-			R:    regexp.MustCompile(`^(siro|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
+			//R:    regexp.MustCompile(`^(siro|abw|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
+			R:    regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
 		},
 		{
 			Name: "JavBus",
@@ -252,9 +258,9 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	for _, scr := range sr {
 		// 检查是否匹配
 		if scr.R.MatchString(code) {
+			log.Println("匹配✅：", scr.Name, code)
 			// 刮削赋值
 			s = scr.S
-			log.Println(scr.Name, "刮削对象:", code)
 			// 刮削
 			err = s.Fetch(code)
 			break

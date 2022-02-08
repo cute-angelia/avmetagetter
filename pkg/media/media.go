@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cute-angelia/AVMeta/pkg/scraper"
+	"AVMeta/pkg/scraper"
 )
 
 // Media Nfo信息结构，
@@ -40,6 +40,7 @@ type Media struct {
 	WebSite   string   `xml:"website"`
 	Month     string   `xml:"-"`
 	DirPath   string   `xml:"-"`
+	Sample    []string `xml:"-"` // 样图
 }
 
 // Inner 文字数据，为了避免某些内容被转义。
@@ -131,6 +132,8 @@ func ParseMedia(s scraper.IScraper) (*Media, error) {
 	title = fmt.Sprintf("%s %s", m.Number, title)
 	// 设置标题
 	m.Title = Inner{Inner: title}
+
+	m.Sample = s.GetSample()
 
 	return &m, nil
 }

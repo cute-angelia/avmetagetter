@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -152,4 +152,16 @@ func (s *SiroScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *SiroScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *SiroScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	s.root.Find(`a.sample_image`).Each(func(i int, selection *goquery.Selection) {
+		if v, ok := selection.Attr("href"); ok {
+			sample = append(sample, v)
+		}
+	})
+	return sample
 }

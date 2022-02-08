@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -182,4 +182,11 @@ func (s *HeyzoScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *HeyzoScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *HeyzoScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	return sample
 }

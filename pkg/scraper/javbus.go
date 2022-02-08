@@ -2,13 +2,16 @@ package scraper
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
+
+// 封面和 javlibrary 一致
+// 封面 https://pics.dmm.co.jp/digital/video/jul00832/jul00832pl.jpg
+// 样图 https://pics.dmm.co.jp/digital/video/jul00832/jul00832jp-2.jpg
 
 // JavBusScraper javbus网站刮削器
 type JavBusScraper struct {
@@ -130,7 +133,7 @@ func (s *JavBusScraper) GetTags() []string {
 func (s *JavBusScraper) GetCover() string {
 	// 获取图片
 	fanart, _ := s.root.Find(`a.bigImage img`).Attr("src")
-	log.Println(fanart, "fanart", s.Site)
+	// log.Println(fanart, "fanart", s.Site)
 	return getFullImg(fanart, s.Site)
 }
 
@@ -167,4 +170,16 @@ func (s *JavBusScraper) GetNumber() string {
 
 func getFullImg(imgsrc string, site string) string {
 	return fmt.Sprintf("%s%s", site, strings.TrimLeft(imgsrc, "/"))
+}
+
+// 获取样图
+func (s *JavBusScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	s.root.Find(`a.sample-box`).Each(func(i int, selection *goquery.Selection) {
+		if v, ok := selection.Attr("href"); ok {
+			sample = append(sample, v)
+		}
+	})
+	return sample
 }

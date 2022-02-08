@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -214,4 +214,11 @@ func (s *JavDBScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *JavDBScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *JavDBScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	return sample
 }

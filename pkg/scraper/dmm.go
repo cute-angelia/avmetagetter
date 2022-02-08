@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -224,4 +224,11 @@ func (s *DMMScraper) GetURI() string {
 // GetNumber 获取番号
 func (s *DMMScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *DMMScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	return sample
 }

@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -182,7 +182,7 @@ func (s *HeydougaScraper) GetTags() []string {
 
 // GetCover 获取图片
 func (s *HeydougaScraper) GetCover() string {
-	return fmt.Sprintf("https://image01-www.heydouga.com/contents/%s/%s/player_thumb.jpg", s.code1, s.code2)
+	return fmt.Sprintf("https://channel.heydouga.com/contents/%s/%s/player_thumb.jpg", s.code1, s.code2)
 }
 
 // GetActors 获取演员
@@ -229,3 +229,12 @@ func (s *HeydougaScraper) GetURI() string {
 func (s *HeydougaScraper) GetNumber() string {
 	return s.number
 }
+
+
+// 获取样图
+func (s *HeydougaScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	return sample
+}
+

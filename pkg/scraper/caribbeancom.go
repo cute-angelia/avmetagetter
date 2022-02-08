@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"
@@ -21,13 +21,17 @@ type CaribBeanComScraper struct {
 	uri    string            // 页面地址
 	number string            // 最终番号
 	root   *goquery.Document // 根节点
+	domain string
 }
 
 // NewCaribBeanComScraper 返回一个被初始化的加勒比刮削对象
 //
 // proxy 字符串参数，传入代理信息
 func NewCaribBeanComScraper(proxy string) *CaribBeanComScraper {
-	return &CaribBeanComScraper{Proxy: proxy}
+	return &CaribBeanComScraper{
+		Proxy:  proxy,
+		domain: "https://www.caribbeancom.com",
+	}
 }
 
 // Fetch 刮削
@@ -36,7 +40,7 @@ func (s *CaribBeanComScraper) Fetch(code string) error {
 	s.number = strings.ToUpper(code)
 
 	// 组合地址
-	uri := fmt.Sprintf("https://www.caribbeancom.com/moviepages/%s/index.html", code)
+	uri := fmt.Sprintf("%s/moviepages/%s/index.html", s.domain, code)
 
 	// 打开远程连接
 	data, err := util.GetResult(uri, s.Proxy, nil)
@@ -145,7 +149,7 @@ func (s *CaribBeanComScraper) GetTags() []string {
 
 // GetCover 背景图片
 func (s *CaribBeanComScraper) GetCover() string {
-	return fmt.Sprintf("https://www.caribbeancom.com/moviepages/%s/images/l_l.jpg", s.number)
+	return fmt.Sprintf("%s/moviepages/%s/images/l_l.jpg", s.domain, s.number)
 }
 
 // GetActors 获取演员
@@ -170,4 +174,22 @@ func (s *CaribBeanComScraper) GetURI() string {
 // GetNumber 正确番号
 func (s *CaribBeanComScraper) GetNumber() string {
 	return s.number
+}
+
+// 获取样图
+func (s *CaribBeanComScraper) GetSample() []string {
+	// 获取图片
+	sample := []string{}
+	s.root.Find(`a.fancy-gallery`).Each(func(i int, selection *goquery.Selection) {
+		if v, ok := selection.Attr("href"); ok {
+			if !strings.Contains(v, "member") {
+				if strings.Contains(v, "http") {
+					sample = append(sample, v)
+				} else {
+					sample = append(sample, s.domain+v)
+				}
+			}
+		}
+	})
+	return sample
 }

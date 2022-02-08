@@ -10,7 +10,7 @@ import (
 	"log"
 	"runtime"
 
-	"github.com/cute-angelia/AVMeta/pkg/util"
+	"AVMeta/pkg/util"
 
 	"github.com/spf13/cobra"
 )

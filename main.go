@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/cute-angelia/AVMeta/pkg/cmd"
+	"AVMeta/pkg/cmd"
 	"log"
 )
 

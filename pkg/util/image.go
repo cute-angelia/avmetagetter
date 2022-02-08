@@ -101,7 +101,7 @@ func PosterCover(srcPhoto, newPhoto string, cfg *ConfigStruct) error {
 		// 获取图片边界
 		b := img.Bounds()
 		// 获取图片宽度并设置为一半
-		width = b.Max.X / 2 + 21
+		width = b.Max.X/2 + 21
 		// 获取图片高度
 		height = b.Max.Y
 		// 将x坐标设置为0
@@ -221,4 +221,12 @@ func saveCover(path string, img image.Image) error {
 	}
 
 	return err
+}
+
+// 图片样图大图
+func GetLargeSample(img string) string {
+	if strings.Contains(img, "-") {
+		return strings.Replace(img, "-", "jp-", 1)
+	}
+	return img
 }
