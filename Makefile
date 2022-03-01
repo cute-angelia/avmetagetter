@@ -64,3 +64,7 @@ tag:
 	git push --tags
 	@echo "\n tags 发布中..."
 
+.PHONY: run
+run:
+	go build
+	./AVMeta

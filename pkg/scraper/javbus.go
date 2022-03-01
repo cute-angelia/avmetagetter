@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/cute-angelia/AVMeta/pkg/util"
@@ -39,13 +40,14 @@ func (s *JavBusScraper) Fetch(code string) error {
 	// 检查错误
 	if err != nil {
 		// 设置番号
-		s.number = strings.ReplaceAll(s.number, "-", "_")
+		// s.number = strings.ReplaceAll(s.number, "-", "_")
 		// 使用 _ 方式
 		err = s.detail()
 		// 检查错误
 		if err != nil {
+			log.Println("第一次抓取失败：", code, err)
 			// 设置番号
-			s.number = strings.ReplaceAll(strings.ReplaceAll(s.number, "-", ""), "_", "")
+			// s.number = strings.ReplaceAll(strings.ReplaceAll(s.number, "-", ""), "_", "")
 			// 去除符号
 			err = s.detail()
 			// 检查错误

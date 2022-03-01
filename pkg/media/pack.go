@@ -2,6 +2,7 @@ package media
 
 import (
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -220,7 +221,7 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 		},
 		{
 			Name: "JavBus",
-			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Proxy),
+			S:    scraper.NewJavBusScraper(cfg.Site.JavBus, cfg.Base.Socket),
 			R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
 		},
 		{
@@ -232,7 +233,7 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 			Name: "Siro",
 			S:    scraper.NewSiroScraper(cfg.Base.Proxy),
 			//R:    regexp.MustCompile(`^(siro|abw|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
-			R:    regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
+			R: regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
 		},
 		{
 			Name: "DMM",
@@ -241,18 +242,18 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 		},
 	}
 	// 定义一个没有正则匹配的刮削对象数组
-	ss := []captures{
-		//{
-		//	Name: "Javlibrary",
-		//	S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
-		//	R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
-		//},
-		//{
-		//	Name: "JavDB",
-		//	S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
-		//	R:    nil,
-		//},
-	}
+	//ss := []captures{
+	//{
+	//	Name: "Javlibrary",
+	//	S:    scraper.NewJavLibraryScraper(cfg.Base.Socket),
+	//	R:    regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+	//},
+	//{
+	//	Name: "JavDB",
+	//	S:    scraper.NewJavDBScraper(cfg.Site.JavDB, cfg.Base.Proxy),
+	//	R:    nil,
+	//},
+	//}
 
 	// 转换番号为小写
 	code = strings.ToLower(code)
@@ -263,7 +264,7 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	for _, scr := range sr {
 		// 检查是否匹配
 		if scr.R.MatchString(code) {
-			log.Println("匹配✅：", scr.Name, code)
+			log.Println("匹配抓取库成功✅：", scr.Name, code)
 			// 刮削赋值
 			s = scr.S
 			// 刮削
@@ -273,25 +274,29 @@ func Search(file string, cfg *util.ConfigStruct) (*Media, error) {
 	}
 
 	// 检查错误
-	if err != nil || s == nil {
-		// 尝试刮削
-		for _, sc := range ss {
-			// 刮削赋值
-			s = sc.S
-
-			log.Println(sc.Name, "刮削对象:", code)
-			// 刮削
-			if err = s.Fetch(code); err == nil {
-				break
-			} else {
-				log.Println(sc.Name, "刮削对象: 失败", err.Error())
-			}
-		}
-	}
+	//if err != nil || s == nil {
+	//	// 尝试刮削
+	//	for _, sc := range ss {
+	//		// 刮削赋值
+	//		s = sc.S
+	//
+	//		log.Println(sc.Name, "刮削对象:", code)
+	//		// 刮削
+	//		if err = s.Fetch(code); err == nil {
+	//			break
+	//		} else {
+	//			log.Println(sc.Name, "刮削对象: 失败", err.Error())
+	//		}
+	//	}
+	//}
 
 	// 再次检测
-	if err != nil || s == nil {
+	if err != nil {
 		return nil, err
+	}
+
+	if s == nil {
+		return nil, errors.New("抓取库无法匹配：" + code)
 	}
 
 	// 刮削并获取nfo对象

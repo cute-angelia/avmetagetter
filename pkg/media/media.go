@@ -4,10 +4,10 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/cute-angelia/AVMeta/pkg/scraper"
+	"log"
 	"regexp"
 	"strings"
 	"time"
-
 )
 
 // Media Nfo信息结构，
@@ -64,6 +64,7 @@ func ParseMedia(s scraper.IScraper) (*Media, error) {
 
 	// 检查刮削对象
 	if s == nil {
+		log.Println("scraper no data")
 		return nil, fmt.Errorf("scraper no data")
 	}
 

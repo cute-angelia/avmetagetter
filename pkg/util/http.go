@@ -7,6 +7,7 @@ import (
 	"github.com/guonaihong/gout"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -137,7 +138,7 @@ func GetRootNewGout(uri, proxy string, cookies []*http.Cookie, debug bool) (*goq
 	body := ""
 	status := 0
 
-	//log.Println("proxy=>",uri,proxy)
+	log.Println("proxy=>", uri, proxy)
 
 	zgo := gout.GET(uri).Debug(debug)
 	if len(proxy) > 0 {
