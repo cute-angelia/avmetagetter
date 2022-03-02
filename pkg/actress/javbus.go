@@ -2,7 +2,6 @@ package actress
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	"github.com/cute-angelia/AVMeta/pkg/util"
@@ -27,13 +26,13 @@ func JavBUS(site, proxy string, page int, censored bool) (actress map[string]str
 		uri = fmt.Sprintf("%s/%s", util.CheckDomainPrefix(site), fmt.Sprintf(javBusUnCensored, page))
 	}
 
-	log.Println("下载路径:", uri, proxy)
+	// log.Println("下载路径:", uri, proxy)
 
 	// 定义女优列表
 	actress = make(map[string]string)
 
 	// 打开女优列表
-	root, err := util.GetRootNewGout(uri, proxy, nil, true)
+	root, err := util.GetRootNewGout(uri, proxy, nil, false)
 	// 检查错误
 	if err != nil {
 		return nil, false, err
@@ -49,11 +48,15 @@ func JavBUS(site, proxy string, page int, censored bool) (actress map[string]str
 		face = strings.TrimSpace(face)
 		// 是否获取到
 		if name != "" && face != "" {
+			if !strings.Contains(face, "http") {
+				face = "https://www.javbus.com" + face
+			}
 			actress[name] = face
 		}
 	})
 
-	// log.Println(ijson.Pretty(actress))
+	//log.Println(ijson.Pretty(actress))
+	//panic(1)
 
 	// 查询下一页节点
 	_, exists := root.Find(`a#next`).Attr("href")

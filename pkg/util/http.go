@@ -7,7 +7,6 @@ import (
 	"github.com/guonaihong/gout"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -138,8 +137,6 @@ func GetRootNewGout(uri, proxy string, cookies []*http.Cookie, debug bool) (*goq
 	body := ""
 	status := 0
 
-	log.Println("proxy=>", uri, proxy)
-
 	zgo := gout.GET(uri).Debug(debug)
 	if len(proxy) > 0 {
 		proxySocks5 := strings.Replace(proxy, "socks5://", "", -1)
@@ -181,9 +178,6 @@ func SavePhoto(uri, savePath, proxy string, needConvert bool) error {
 	if err != nil {
 		return err
 	}
-
-	log.Println(uri)
-
 	// 读取远程字节集
 	body, err := GetResult(uri, proxy, nil)
 	// 检查错误

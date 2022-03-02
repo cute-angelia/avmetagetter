@@ -187,10 +187,14 @@ func (a *Actress) downProcess(name, cover string, wg *util.WaitGroup, bar *progr
 	// 获取扩展
 	ext := path.Ext(cover)
 	// 下载图片
-	_ = util.SavePhoto(cover,
+	err := util.SavePhoto(cover,
 		fmt.Sprintf("./actress/%s.jpg", name),
 		a.cfg.Base.Proxy,
 		!strings.EqualFold(strings.ToLower(ext), ".jpg"))
+
+	if err != nil {
+		log.Println(err, name, cover)
+	}
 
 	wg.Done()
 	_ = bar.Add(1)
