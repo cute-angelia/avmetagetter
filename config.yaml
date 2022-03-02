@@ -1,10 +1,10 @@
 base:
-    proxy: "socks5://host-bwg-new.aaqq.com:8096"
-    socket: "host-bwg-new.aaqq.com:8096"
+    proxy: "socks5://host-bwg-new.aaqq.in:8096"
+    socket: "host-bwg-new.aaqq.in:8096"
 media:
     library: nfo
-    url: "http://192.168.3.1:8096"
-    api: "b7215f93f69f447c69997028ccae726fa"
+    url: "http://home.shixinyi.cn:38096"
+    api: "f948875225934657b672ae63b2abc6c9"
     secretid: ""
     secretkey: ""
 path:

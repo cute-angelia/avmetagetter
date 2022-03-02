@@ -128,7 +128,7 @@ func GetRoot(uri, proxy string, cookies []*http.Cookie) (*goquery.Document, erro
 	return root, nil
 }
 
-// GetRoot 获取远程树结构，并返回树结构及错误信息
+// GetRootNewGout GetRoot 获取远程树结构，并返回树结构及错误信息
 //
 // uri 字符串参数，传入请求地址，
 // proxy 字符串参数，传入代理地址，
@@ -181,6 +181,8 @@ func SavePhoto(uri, savePath, proxy string, needConvert bool) error {
 	if err != nil {
 		return err
 	}
+
+	log.Println(uri)
 
 	// 读取远程字节集
 	body, err := GetResult(uri, proxy, nil)
