@@ -49,6 +49,7 @@ func (s *JavBusScraper) Fetch(code string) error {
 			// 设置番号
 			// s.number = strings.ReplaceAll(strings.ReplaceAll(s.number, "-", ""), "_", "")
 			// 去除符号
+			s.number = strings.ToLower(s.number)
 			err = s.detail()
 			// 检查错误
 			if err != nil {
