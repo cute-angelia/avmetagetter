@@ -1,9 +1,9 @@
 base:
-    proxy: "socks5://host-bwg-new.aaqq.in:8096"
-    socket: "host-bwg-new.aaqq.in:8096"
+    proxy: "socks5://ip:port"
+    socket: "ip:port"
 media:
     library: nfo
-    url: "http://home.shixinyi.cn:38096"
+    url: "http://ip:port"
     api: "f948875225934657b672ae63b2abc6c9"
     secretid: ""
     secretkey: ""
