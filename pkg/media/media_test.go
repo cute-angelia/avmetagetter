@@ -30,7 +30,8 @@ func TestSearch(t *testing.T) {
 		//"fc2-2653105",
 		//"ABW-198",
 		//"534IND-028",
-		"467SHINKI-075",
+		//"467SHINKI-075",
+		"ROE-060",
 	}
 
 	for _, no := range nos {
