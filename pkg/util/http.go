@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
-	"github.com/guonaihong/gout"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -119,44 +118,6 @@ func GetRoot(uri, proxy string, cookies []*http.Cookie) (*goquery.Document, erro
 
 	// 转换为节点数据
 	root, err := goquery.NewDocumentFromReader(bytes.NewReader(data))
-	// 检查错误
-	if err != nil {
-		return nil, err
-	}
-
-	return root, nil
-}
-
-// GetRootNewGout GetRoot 获取远程树结构，并返回树结构及错误信息
-//
-// uri 字符串参数，传入请求地址，
-// proxy 字符串参数，传入代理地址，
-// cookies cookie数组，传入cookie信息。
-func GetRootNewGout(uri, proxy string, cookies []*http.Cookie, debug bool) (*goquery.Document, error) {
-
-	body := ""
-	status := 0
-
-	zgo := gout.GET(uri).Debug(debug)
-	if len(proxy) > 0 {
-		proxySocks5 := strings.Replace(proxy, "socks5://", "", -1)
-
-		//log.Println("proxySocks5=>",uri,proxySocks5)
-
-		zgo.SetSOCKS5(proxySocks5)
-	}
-	err := zgo.SetHeader(gout.H{
-		"cookie":     cookies,
-		"user-agent": USER_AGENT,
-	}).BindBody(&body).Code(&status).SetTimeout(time.Second * 6).Do()
-
-	// 检查错误
-	if err != nil {
-		return nil, err
-	}
-
-	// 转换为节点数据
-	root, err := goquery.NewDocumentFromReader(strings.NewReader(body))
 	// 检查错误
 	if err != nil {
 		return nil, err

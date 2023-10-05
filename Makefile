@@ -8,12 +8,6 @@ version = $(shell if [ "`git describe --tags --abbrev=0 2>/dev/null`" != "" ];th
 commit = $(shell git rev-parse --short HEAD)
 built = $(shell TZ=UTC date +%FT%T%z)
 ldflags="-s -w -X main.version=${version} -X main.commit=${commit} -X main.built=${built}"
-
-# enable module support across all go commands.
-export GO111MODULE = on
-# enable consistent Go 1.12/1.13 GOPROXY behavior.
-export GOPROXY = https://goproxy.io
-
 # Build
 
 .PHONY: build
@@ -60,7 +54,7 @@ tag:
 	git add .
 	git commit -am "update"
 	git push origin master
-	git tag v1.0.12
+	git tag v1.0.13
 	git push --tags
 	@echo "\n tags 发布中..."
 

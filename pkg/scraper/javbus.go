@@ -65,8 +65,13 @@ func (s *JavBusScraper) Fetch(code string) error {
 func (s *JavBusScraper) detail() error {
 	// 组合uri
 	uri := fmt.Sprintf("%s/%s", util.CheckDomainPrefix(s.Site), s.number)
+
+	// client
+	client := util.NewIGout("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36", "", s.Proxy)
+	body, _ := client.Get(uri)
 	// 获取节点
-	root, err := util.GetRootNewGout(uri, s.Proxy, nil, false)
+	root, err := client.Dom(body)
+
 	// 检查错误
 	if err != nil {
 		return err
