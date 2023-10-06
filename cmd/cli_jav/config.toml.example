@@ -1,0 +1,7 @@
+[common]
+socks5 = "socks5://xxxxx:xxx"
+
+[javbus]
+site = "https://www.x.com/"
+useragent = ""
+cookies = ""

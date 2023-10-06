@@ -1,4 +1,5 @@
 .PHONY: up
+
 up:
 	git add .
 	git commit -am "update"

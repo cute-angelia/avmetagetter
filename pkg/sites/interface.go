@@ -1,5 +1,9 @@
 package sites
 
+import (
+	"github.com/spf13/viper"
+)
+
 type SiteResp struct {
 	No          string
 	Title       string            // 标题
@@ -18,4 +22,15 @@ type SiteResp struct {
 
 type SiteCommon interface {
 	Fetch() (SiteResp, error)
+}
+
+func NewSite(t string, no string) SiteCommon {
+	var s SiteCommon
+	switch t {
+	case "javbus":
+		s = NewJavBus(no, viper.GetString(t+".useragent"), viper.GetString(t+".cookies"), viper.GetString("common.socks5"))
+		break
+	default:
+	}
+	return s
 }

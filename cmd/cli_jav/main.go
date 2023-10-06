@@ -2,6 +2,8 @@ package main
 
 import (
 	_ "embed"
+	"errors"
+	"fmt"
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
 	"github.com/cute-angelia/go-utils/utils/conf"
 	"github.com/urfave/cli/v2"
@@ -23,7 +25,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "no",
 				Value:       "",
-				Usage:       "no for movie",
+				Usage:       "番号",
 				Destination: &no,
 			},
 		},
@@ -34,7 +36,16 @@ func main() {
 				}
 			}
 			if len(no) > 0 {
-				sites.NewJavBus(no, "", "", "")
+				site := sites.NewSite("javbus", no)
+				log.Println(site)
+				if resp, err := site.Fetch(); err != nil {
+					return err
+				} else {
+					log.Println(fmt.Sprintf("%#v", resp))
+					return nil
+				}
+			} else {
+				return errors.New("需要一个番号")
 			}
 			return nil
 		},
