@@ -1,64 +1,20 @@
-.DEFAULT_GOAL = test
-.PHONY: FORCE
-
-SHELL := /bin/bash
-BASEDIR = $(shell pwd)
-
-version = $(shell if [ "`git describe --tags --abbrev=0 2>/dev/null`" != "" ];then git describe --tags --abbrev=0; else echo master; fi)
-commit = $(shell git rev-parse --short HEAD)
-built = $(shell TZ=UTC date +%FT%T%z)
-ldflags="-s -w -X main.version=${version} -X main.commit=${commit} -X main.built=${built}"
-# Build
-
-.PHONY: build
-build:
-	go build
-	AVMeta
-
-build_race:
-	go build -race -ldflags ${ldflags}
-.PHONY: build_race
-
-clean:
-	rm -f AVMeta
-.PHONY: clean
-
-# Test
-test: build
-	go test -v ./...
-.PHONY: test
-
-AVMeta: FORCE
-	go build -ldflags ${ldflags}
-
-go.mod: FORCE
-	go mod tidy
-	go mod verify
-go.sum: go.mod
-
-unexport GOFLAGS
-vendor_free_build: FORCE
-	go build -ldflags ${ldflags}
-
-.PHONY: up tag
+.PHONY: up
 up:
 	git add .
 	git commit -am "update"
-	git pull origin master
-	git push origin master
+	git pull origin v2
+	git push origin v2
 	@echo "\n 代码提交发布..."
 
-
 tag:
-	git pull origin master
+	git pull origin v2
 	git add .
 	git commit -am "update"
-	git push origin master
-	git tag v1.0.13
+	git push origin v2
+	git tag v1.0.14
 	git push --tags
 	@echo "\n tags 发布中..."
 
 .PHONY: run
 run:
-	go build
-	./AVMeta
+	go run main
