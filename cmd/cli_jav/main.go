@@ -3,8 +3,8 @@ package main
 import (
 	_ "embed"
 	"errors"
-	"fmt"
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
+	"github.com/cute-angelia/go-utils/syntax/ijson"
 	"github.com/cute-angelia/go-utils/utils/conf"
 	"github.com/urfave/cli/v2"
 	"log"
@@ -36,12 +36,10 @@ func main() {
 				}
 			}
 			if len(no) > 0 {
-				site := sites.NewSite("javbus", no)
-				log.Println(site)
-				if resp, err := site.Fetch(); err != nil {
+				if resp, err := sites.GetSiteInfo(no); err != nil {
 					return err
 				} else {
-					log.Println(fmt.Sprintf("%#v", resp))
+					log.Println(ijson.Pretty(resp))
 					return nil
 				}
 			} else {
