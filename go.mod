@@ -1,4 +1,4 @@
-module metagetter
+module github.com/cute-angelia/metagetter
 
 go 1.20
 

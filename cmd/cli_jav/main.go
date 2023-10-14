@@ -6,11 +6,11 @@ import (
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
 	"github.com/cute-angelia/go-utils/syntax/ijson"
 	"github.com/cute-angelia/go-utils/utils/conf"
+	"github.com/cute-angelia/metagetter/pkg/media"
+	"github.com/cute-angelia/metagetter/pkg/scraper"
 	"github.com/spf13/viper"
 	"github.com/urfave/cli/v2"
 	"log"
-	"metagetter/pkg/media"
-	"metagetter/pkg/scraper"
 	"os"
 )
 

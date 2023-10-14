@@ -3,7 +3,7 @@ package media
 import (
 	"encoding/xml"
 	"fmt"
-	"metagetter/pkg/sites"
+	"github.com/cute-angelia/metagetter/pkg/sites"
 	"regexp"
 	"strings"
 )

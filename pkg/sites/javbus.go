@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/cute-angelia/metagetter/pkg/utils"
 	"github.com/guonaihong/gout"
 	"github.com/spf13/viper"
 	"log"
-	"metagetter/pkg/utils"
 	"strings"
 )
 
