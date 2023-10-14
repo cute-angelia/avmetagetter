@@ -12,6 +12,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 	loggerV3.New(loggerV3.WithIsOnline(false))
 
 	var no string
+	var captureNames string
 	app := &cli.App{
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -34,6 +36,12 @@ func main() {
 				Name:  "nfo",
 				Usage: "数据以nfo返回",
 			},
+			&cli.StringFlag{
+				Name:        "scraper",
+				Value:       "",
+				Usage:       "指定scraper：JavBus JavLibrary 等",
+				Destination: &captureNames,
+			},
 		},
 		Action: func(cCtx *cli.Context) error {
 			if len(no) == 0 {
@@ -42,7 +50,7 @@ func main() {
 				}
 			}
 			if len(no) > 0 {
-				iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"))
+				iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"), strings.Split(captureNames, ","))
 				if resp, err := iscraper.Search(); err != nil {
 					return err
 				} else {

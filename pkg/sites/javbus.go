@@ -30,10 +30,17 @@ func NewJavBus(no string, useragent, cookies, proxy string) *javbus {
 	}
 }
 
+func (that *javbus) GetPageUri() string {
+	if len(that.site) == 0 {
+		that.site = "https://www.javbus.com/"
+	}
+	return that.site + that.no
+}
+
 func (that *javbus) Fetch() (resp ScraperResp, err error) {
-	uri := that.site + that.no
+	uri := that.GetPageUri()
 	if !strings.Contains(uri, "http") {
-		return resp, errors.New("地址不对:" + uri)
+		return resp, errors.New("error url address:" + uri)
 	}
 	var htmlBody string
 
@@ -41,10 +48,12 @@ func (that *javbus) Fetch() (resp ScraperResp, err error) {
 	utils.GetIGout(uri, that.proxy, false).SetHeader(gout.H{
 		"User-Agent": that.useragent,
 		"Cookie":     that.cookies,
+		"referer":    that.site,
 	}).BindBody(&htmlBody).Do()
 
 	if root, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
 		log.Println("ERROR:", err)
+		return resp, err
 	} else {
 		// 查找是否获取到
 		if -1 == root.Find(`h3`).Index() {

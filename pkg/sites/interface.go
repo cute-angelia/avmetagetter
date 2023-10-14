@@ -2,6 +2,7 @@ package sites
 
 type (
 	IScraper interface {
+		GetPageUri() string
 		Fetch() (ScraperResp, error)
 	}
 	ScraperResp struct {
@@ -21,6 +22,10 @@ type (
 	}
 	BuildInScraper IScraper
 )
+
+func (_ *ScraperResp) GetPageUri() (_ string) {
+	return
+}
 
 func (_ *ScraperResp) Fetch() (resp ScraperResp, err error) {
 	return
