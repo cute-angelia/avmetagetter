@@ -12,10 +12,12 @@ tag:
 	git add .
 	git commit -am "update"
 	git push origin v2
-	git tag v1.0.14
+	git tag v1.1.0
 	git push --tags
 	@echo "\n tags 发布中..."
 
 .PHONY: run
+no := $(firstword $(MAKECMDGOALS))
+# make run no=ADN-499
 run:
-	go run main
+	cd cmd/cli_jav && go run main.go $(no)

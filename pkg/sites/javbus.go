@@ -12,6 +12,7 @@ import (
 )
 
 type javbus struct {
+	BuildInScraper
 	no        string
 	useragent string
 	cookies   string
@@ -19,7 +20,7 @@ type javbus struct {
 	site      string
 }
 
-func NewJavBus(no, useragent, cookies, proxy string) *javbus {
+func NewJavBus(no string, useragent, cookies, proxy string) *javbus {
 	return &javbus{
 		no:        no,
 		useragent: useragent,
@@ -29,11 +30,15 @@ func NewJavBus(no, useragent, cookies, proxy string) *javbus {
 	}
 }
 
-func (that *javbus) Fetch() (resp SiteResp, err error) {
+func (that *javbus) Fetch() (resp ScraperResp, err error) {
 	uri := that.site + that.no
-
+	if !strings.Contains(uri, "http") {
+		return resp, errors.New("地址不对:" + uri)
+	}
 	var htmlBody string
-	utils.GetIGout().GET(uri).SetHeader(gout.H{
+
+	// get
+	utils.GetIGout(uri, that.proxy, false).SetHeader(gout.H{
 		"User-Agent": that.useragent,
 		"Cookie":     that.cookies,
 	}).BindBody(&htmlBody).Do()
@@ -47,6 +52,7 @@ func (that *javbus) Fetch() (resp SiteResp, err error) {
 		}
 
 		resp.No = that.no
+		resp.WebSite = uri
 		resp.Title = root.Find("h3").Text()
 		resp.Intro = ""
 		resp.Director = root.Find(`a[href*="/director/"]`).Text()

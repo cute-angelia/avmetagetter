@@ -1,38 +1,16 @@
 package media
 
-
 import (
 	"encoding/xml"
 	"fmt"
 	"github.com/cute-angelia/go-utils/utils/generator/hash"
 )
 
-// Inner 文字数据，为了避免某些内容被转义。
-type Inner struct {
-	Inner string `xml:",innerxml"`
-}
-
-// Actor 演员信息，保存演员姓名及头像地址。
-type Actor struct {
-	Name  string `xml:"name"`
-	Thumb string `xml:"thumb"`
-}
-
-type Art struct {
-	Poster string `xml:"poster"`
-	Fanart string `xml:"fanart"`
-}
-
-type JellyfinMeta struct {
-	Tmdbid int    `xml:"tmdbid"` // tmdbid
-	Key    string `xml:"key"`    // cache key
-	Update string `xml:"update"`
-}
-
-// Nfo 信息结构，
+// NfoMovie 信息结构，
 // 用以存储 nfo 文件所需各项信息。
 // https://www.tinymediamanager.org/docs/movies/settings
-type Nfo struct {
+type NfoMovie struct {
+	BuildMedia
 	XMLName   xml.Name `xml:"movie"`
 	Title     Inner    `xml:"title"`
 	SortTitle string   `xml:"sorttitle"`
@@ -71,11 +49,11 @@ type Nfo struct {
 	NfoPath      string       `xml:"nfopath"`      // 自建路径，用于后期修改文件保存
 }
 
-func NewNfo() *Nfo {
-	return &Nfo{}
+func NewNfoMovie() *NfoMovie {
+	return &NfoMovie{}
 }
 
-func (n *Nfo) Marshal() ([]byte, error) {
+func (n *NfoMovie) Marshal() ([]byte, error) {
 	// 转换
 	x, err := xml.MarshalIndent(n, "", "  ")
 	// 检查
@@ -88,7 +66,7 @@ func (n *Nfo) Marshal() ([]byte, error) {
 }
 
 // CalcJellyfinMetaCacheKey 简单根据 tmbid 和 tmdbid 的变化计算
-func (n *Nfo) CalcJellyfinMetaCacheKey() string {
+func (n *NfoMovie) CalcJellyfinMetaCacheKey() string {
 	str := fmt.Sprintf("%d%s", n.Tmdbid, n.Imdbid)
 
 	return hash.Hash(hash.AlgoSha1, str)

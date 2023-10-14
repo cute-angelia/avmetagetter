@@ -6,9 +6,11 @@ import (
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
 	"github.com/cute-angelia/go-utils/syntax/ijson"
 	"github.com/cute-angelia/go-utils/utils/conf"
+	"github.com/spf13/viper"
 	"github.com/urfave/cli/v2"
 	"log"
-	"metagetter/pkg/sites"
+	"metagetter/pkg/media"
+	"metagetter/pkg/scraper"
 	"os"
 )
 
@@ -28,6 +30,10 @@ func main() {
 				Usage:       "番号",
 				Destination: &no,
 			},
+			&cli.BoolFlag{
+				Name:  "nfo",
+				Usage: "数据以nfo返回",
+			},
 		},
 		Action: func(cCtx *cli.Context) error {
 			if len(no) == 0 {
@@ -36,10 +42,18 @@ func main() {
 				}
 			}
 			if len(no) > 0 {
-				if resp, err := sites.GetSiteInfo(no); err != nil {
+				iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"))
+				if resp, err := iscraper.Search(); err != nil {
 					return err
 				} else {
-					log.Println(ijson.Pretty(resp))
+					// nfo
+					if cCtx.Bool("nfo") {
+						nfo := media.NewNfoJav()
+						nfo.ParseMedia(resp)
+						log.Println(ijson.Pretty(nfo))
+					} else {
+						log.Println(ijson.Pretty(resp))
+					}
 					return nil
 				}
 			} else {
