@@ -2,7 +2,7 @@ package sites
 
 type (
 	IScraper interface {
-		GetPageUri() string
+		GetPageUri() []string
 		Fetch() (ScraperResp, error)
 	}
 	ScraperResp struct {
@@ -23,7 +23,7 @@ type (
 	BuildInScraper IScraper
 )
 
-func (_ *ScraperResp) GetPageUri() (_ string) {
+func (_ *ScraperResp) GetPageUri() (_ []string) {
 	return
 }
 

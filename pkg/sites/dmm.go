@@ -31,19 +31,19 @@ func NewDmm(no string, useragent, cookies, proxy string) *dmm {
 	}
 }
 
-func (that *dmm) GetPageUri() string {
-	return ""
-}
-
-func (that *dmm) Fetch() (resp ScraperResp, err error) {
-
-	// 组合地址列表
-	uris := []string{
+func (that *dmm) GetPageUri() []string {
+	return []string{
 		"https://www.dmm.co.jp/digital/videoa/-/detail/=/cid=%s",
 		"https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=%s",
 		"https://www.dmm.co.jp/digital/anime/-/detail/=/cid=%s",
 		"https://www.dmm.co.jp/mono/anime/-/detail/=/cid=%s",
 	}
+}
+
+func (that *dmm) Fetch() (resp ScraperResp, err error) {
+
+	// 组合地址列表
+	uris := that.GetPageUri()
 
 	for _, uri := range uris {
 
@@ -65,17 +65,19 @@ func (that *dmm) Fetch() (resp ScraperResp, err error) {
 
 		if root, err := goquery.NewDocumentFromReader(reader); err != nil {
 			log.Println("ERROR:", err)
-			return resp, err
+			continue
 		} else {
 			// 判断是否返回了地域限制
 			foreignError := root.Find(`.foreignError__desc`).Text()
 			if foreignError != "" {
-				return resp, fmt.Errorf(foreignError)
+				err = fmt.Errorf(foreignError)
+				continue
 			}
 
 			// 查找是否获取到
 			if -1 == root.Find(`h3`).Index() {
-				return resp, errors.New("404 Not Found")
+				err = errors.New("404 Not Found")
+				continue
 			}
 
 			resp.No = that.no

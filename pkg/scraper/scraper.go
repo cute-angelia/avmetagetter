@@ -69,11 +69,18 @@ func (that *scraper) getCaptures() []captures {
 			Reg:     regexp.MustCompile(`[a-zA-Z]{2,5}[-|\s\S][0-9]{3,4}`),
 			Enable:  false,
 		},
-		//{
-		//	Name: "TokyoHot",
-		//	S:    scraper.NewTokyoHotScraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`(^red-\d{3}|n\d{4})`),
-		//},
+		{
+			Name:    "FC2",
+			Scraper: sites.NewFc2(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`^(fc2|FC2)-[0-9]{6,8}`),
+			Enable:  true,
+		},
+		{
+			Name:    "TokyoHot",
+			Scraper: sites.NewTokyohot(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`(^red-\d{3}|n\d{4})`),
+			Enable:  true,
+		},
 		//{
 		//	Name: "Heyzo",
 		//	S:    scraper.NewHeyzoScraper(cfg.Base.Proxy),
@@ -84,11 +91,7 @@ func (that *scraper) getCaptures() []captures {
 		//	S:    scraper.NewHeydougaScraper(cfg.Base.Proxy),
 		//	R:    regexp.MustCompile(`([0-9]{4}).+?([0-9]{3,4})$`),
 		//},
-		//{
-		//	Name: "FC2",
-		//	S:    scraper.NewFC2Scraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`^fc2-[0-9]{6,7}`),
-		//},
+
 		//{
 		//	Name: "FC2Club",
 		//	S:    scraper.NewFC2ClubScraper(cfg.Base.Proxy),
