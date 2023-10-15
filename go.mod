@@ -10,6 +10,8 @@ require (
 	github.com/liuzl/gocc v0.0.0-20230104115651-c793537006ac
 	github.com/spf13/viper v1.16.0
 	github.com/urfave/cli/v2 v2.25.7
+	github.com/xuthus5/BaiduTranslate v0.0.0-20190408054037-98527fb4f6a1
+	golang.org/x/text v0.13.0
 )
 
 require (
@@ -61,7 +63,6 @@ require (
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

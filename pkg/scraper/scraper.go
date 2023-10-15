@@ -41,6 +41,7 @@ func (that *scraper) getCaptures() []captures {
 			Name:    "JavBus",
 			Scraper: sites.NewJavBus(that.no, viper.GetString("javbus.useragent"), viper.GetString("javbus.cookies"), that.proxy),
 			Reg:     regexp.MustCompile(`^[a-zA-Z]+-\d{2,10}$`),
+			Enable:  true,
 		},
 		{
 			Name:         "JavLibrary",
@@ -53,13 +54,21 @@ func (that *scraper) getCaptures() []captures {
 			Name:         "JavDb",
 			Scraper:      sites.NewJavDb(that.no, DefaultUserAgent, "", that.proxy),
 			Reg:          regexp.MustCompile(`^[a-zA-Z-0-9]{2,15}$`),
+			Enable:       true,
 			NeedChromeDp: true,
 		},
-		//{
-		//	Name: "CaribBeanCom",
-		//	S:    scraper.NewCaribBeanComScraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`^\d{6}-\d{3}$`),
-		//},
+		{
+			Name:    "CaribBeanCom",
+			Scraper: sites.NewCaribBeanCom(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`^\d{6}-\d{3}$`),
+			Enable:  true,
+		},
+		{
+			Name:    "DMM",
+			Scraper: sites.NewDmm(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`[a-zA-Z]{2,5}[-|\s\S][0-9]{3,4}`),
+			Enable:  false,
+		},
 		//{
 		//	Name: "TokyoHot",
 		//	S:    scraper.NewTokyoHotScraper(cfg.Base.Proxy),
@@ -92,11 +101,7 @@ func (that *scraper) getCaptures() []captures {
 		//	//R:    regexp.MustCompile(`^(siro|abw|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
 		//	R: regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
 		//},
-		//{
-		//	Name: "DMM",
-		//	S:    scraper.NewDMMScraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`[a-zA-Z]{2,5}[-|\s\S][0-9]{3,4}`),
-		//},
+
 	}
 	if len(that.captureNames) > 0 && len(that.captureNames[0]) > 0 {
 		var cs2 []captures
