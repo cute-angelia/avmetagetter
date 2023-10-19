@@ -39,7 +39,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "scraper",
 				Value:       "",
-				Usage:       "指定scraper：JavBus JavDb CaribBeanCom FC2 TokyoHot等",
+				Usage:       "指定scraper：JavBus JavDb CaribBeanCom FC2 TokyoHot Heyzo Heydouga Siro等",
 				Destination: &captureNames,
 			},
 		},

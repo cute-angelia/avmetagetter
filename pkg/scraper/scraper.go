@@ -81,30 +81,24 @@ func (that *scraper) getCaptures() []captures {
 			Reg:     regexp.MustCompile(`(^red-\d{3}|n\d{4})`),
 			Enable:  true,
 		},
-		//{
-		//	Name: "Heyzo",
-		//	S:    scraper.NewHeyzoScraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`^heyzo-[0-9]{4}`),
-		//},
-		//{
-		//	Name: "Heydouga",
-		//	S:    scraper.NewHeydougaScraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`([0-9]{4}).+?([0-9]{3,4})$`),
-		//},
-
-		//{
-		//	Name: "FC2Club",
-		//	S:    scraper.NewFC2ClubScraper(cfg.Base.Proxy),
-		//	R:    regexp.MustCompile(`^fc2-[0-9]{6,7}`),
-		//},
-
-		//{
-		//	Name: "Siro",
-		//	S:    scraper.NewSiroScraper(cfg.Base.Proxy),
-		//	//R:    regexp.MustCompile(`^(siro|abw|abp|[0-9]{3,4}[a-zA-Z]{2,5})-[0-9]{3,4}`),
-		//	R: regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
-		//},
-
+		{
+			Name:    "Heyzo",
+			Scraper: sites.NewHeyzo(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`^heyzo-[0-9]{4}`),
+			Enable:  true,
+		},
+		{
+			Name:    "Heydouga",
+			Scraper: sites.NewHeydouga(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`([0-9]{4}).+?([0-9]{3,4})$`),
+			Enable:  true,
+		},
+		{
+			Name:    "Siro",
+			Scraper: sites.NewSiro(that.no, DefaultUserAgent, "coc=1; adc=1", that.proxy),
+			Reg:     regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
+			Enable:  true,
+		},
 	}
 	if len(that.captureNames) > 0 && len(that.captureNames[0]) > 0 {
 		var cs2 []captures

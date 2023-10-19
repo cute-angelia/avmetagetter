@@ -85,8 +85,8 @@ func (that *tokyohot) Fetch() (resp ScraperResp, err error) {
 			resp.ReleaseDate = strings.ReplaceAll(strings.ReplaceAll(root.Find(`.items_article_Releasedate p`).Text(), "上架时间 :", ""), "販売日 :", "")
 
 			resp.Runtime = ""
-			resp.Studio = "FC2"
-			resp.Series = "FC2"
+			resp.Studio = "tokyohot"
+			resp.Series = "tokyohot"
 
 			// 类别数组
 			var tags []string
