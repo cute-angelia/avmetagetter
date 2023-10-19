@@ -94,6 +94,11 @@ func (that *siro) Fetch() (resp ScraperResp, err error) {
 
 			// 获取sample图片
 			sample := []string{}
+			root.Find(".sample-photo a").Each(func(i int, selection *goquery.Selection) {
+				if v, ok := selection.Attr("href"); ok {
+					sample = append(sample, v)
+				}
+			})
 			resp.SampleImg = sample
 
 			// 获取cover图片
