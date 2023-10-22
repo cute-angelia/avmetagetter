@@ -50,8 +50,9 @@ func (that *caribBeanCom) Fetch() (resp ScraperResp, err error) {
 		// 编码转换
 		reader := transform.NewReader(strings.NewReader(htmlBody), japanese.EUCJP.NewDecoder())
 
-		if root, err := goquery.NewDocumentFromReader(reader); err != nil {
-			log.Println("ERROR:", err)
+		if root, err2 := goquery.NewDocumentFromReader(reader); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 			// 查找是否获取到
@@ -65,9 +66,9 @@ func (that *caribBeanCom) Fetch() (resp ScraperResp, err error) {
 			resp.Title = root.Find(`h1[itemprop="name"]`).Text()
 
 			// 获取简介
-			intro, err := root.Find(`p[itemprop="description"]`).Html()
+			intro, err3 := root.Find(`p[itemprop="description"]`).Html()
 			// 检查
-			if err != nil {
+			if err3 != nil {
 				intro = ""
 			} else {
 				intro = utils.IntroFilter(intro)
@@ -122,5 +123,5 @@ func (that *caribBeanCom) Fetch() (resp ScraperResp, err error) {
 	}
 	// log.Println(htmlBody)
 
-	return resp, nil
+	return resp, err
 }

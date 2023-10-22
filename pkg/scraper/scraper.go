@@ -4,6 +4,7 @@ import (
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
 	"github.com/cute-angelia/metagetter/pkg/sites"
 	"github.com/spf13/viper"
+	"log"
 	"regexp"
 )
 
@@ -121,8 +122,10 @@ func (that *scraper) Search() (resp sites.ScraperResp, err error) {
 		if item.Enable && item.Reg.MatchString(that.no) {
 			loggerV3.GetLogger().Info().Str("Matched", that.no).Str("site", item.Name).Send()
 			if resp, err = item.Scraper.Fetch(); err != nil {
+				log.Println("err", err)
 				continue
 			} else {
+				log.Println("err return", err)
 				return
 			}
 		}

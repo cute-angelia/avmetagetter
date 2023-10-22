@@ -93,8 +93,9 @@ func (that *heydouga) Fetch() (resp ScraperResp, err error) {
 			"referer":    that.site,
 		}).BindBody(&htmlBody).Do()
 
-		if root, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
-			log.Println("ERROR:", err)
+		if root, err2 := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 			// 查找是否获取到
@@ -174,5 +175,5 @@ func (that *heydouga) Fetch() (resp ScraperResp, err error) {
 	}
 	// log.Println(htmlBody)
 
-	return resp, nil
+	return resp, err
 }

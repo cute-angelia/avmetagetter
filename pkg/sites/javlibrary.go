@@ -48,8 +48,9 @@ func (that *javLibrary) Fetch() (resp ScraperResp, err error) {
 			return resp, err
 		}
 
-		if root, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
-			log.Println("ERROR:", err)
+		if root, err2 := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 
@@ -125,5 +126,5 @@ func (that *javLibrary) Fetch() (resp ScraperResp, err error) {
 	}
 	// log.Println(htmlBody)
 
-	return resp, nil
+	return resp, err
 }

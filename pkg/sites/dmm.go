@@ -63,8 +63,9 @@ func (that *dmm) Fetch() (resp ScraperResp, err error) {
 		// 编码转换
 		reader := transform.NewReader(strings.NewReader(htmlBody), japanese.EUCJP.NewDecoder())
 
-		if root, err := goquery.NewDocumentFromReader(reader); err != nil {
-			log.Println("ERROR:", err)
+		if root, err2 := goquery.NewDocumentFromReader(reader); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 			// 判断是否返回了地域限制
@@ -172,5 +173,5 @@ func (that *dmm) Fetch() (resp ScraperResp, err error) {
 
 		// log.Println(htmlBody)
 	}
-	return resp, nil
+	return resp, err
 }

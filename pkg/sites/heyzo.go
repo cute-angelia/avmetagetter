@@ -107,12 +107,16 @@ func (that *heyzo) Fetch() (resp ScraperResp, err error) {
 		// debug
 		//log.Println(htmlBody)
 
-		if root, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
-			log.Println("ERROR:", err)
+		if root, err2 := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 			// 获取json节点
-			data, err := root.Find(`script[type="application/ld+json"]`).Html()
+			data, err3 := root.Find(`script[type="application/ld+json"]`).Html()
+			if err3 != nil {
+				err = err3
+			}
 			// 转码
 			data = strings.ReplaceAll(html.UnescapeString(data), "\n", "")
 			// 检查
@@ -169,5 +173,5 @@ func (that *heyzo) Fetch() (resp ScraperResp, err error) {
 		}
 	}
 	// log.Println(htmlBody)
-	return resp, nil
+	return resp, err
 }

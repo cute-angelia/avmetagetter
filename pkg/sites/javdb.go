@@ -57,8 +57,9 @@ func (that *javDb) Fetch() (resp ScraperResp, err error) {
 		}
 		//}
 
-		if rootPre, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
-			log.Println("ERROR:", err)
+		if rootPre, err2 := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 			// 特殊处理
@@ -75,8 +76,9 @@ func (that *javDb) Fetch() (resp ScraperResp, err error) {
 				return resp, err
 			}
 
-			if root, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
-				log.Println("ERROR:", err)
+			if root, err3 := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err3 != nil {
+				log.Println("ERROR:", err3)
+				err = err3
 				continue
 			} else {
 				//log.Println(htmlBody)
@@ -176,5 +178,5 @@ func (that *javDb) Fetch() (resp ScraperResp, err error) {
 		// log.Println(htmlBody)
 
 	}
-	return resp, nil
+	return resp, err
 }

@@ -41,7 +41,6 @@ func (that *javbus) Fetch() (resp ScraperResp, err error) {
 	uris := that.GetPageUri()
 
 	for _, uri := range uris {
-
 		if !strings.Contains(uri, "http") {
 			err = errors.New("error url address:" + uri)
 			continue
@@ -49,25 +48,35 @@ func (that *javbus) Fetch() (resp ScraperResp, err error) {
 		var htmlBody string
 
 		// get
-		utils.GetIGout(uri, that.proxy, false).SetHeader(gout.H{
+		err = utils.GetIGout(uri, that.proxy, false).SetHeader(gout.H{
 			"User-Agent": that.useragent,
 			"Cookie":     that.cookies,
 			"referer":    that.site,
 		}).BindBody(&htmlBody).Do()
 
-		if root, err := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err != nil {
-			log.Println("ERROR:", err)
+		if root, err2 := goquery.NewDocumentFromReader(strings.NewReader(htmlBody)); err2 != nil {
+			log.Println("ERROR:", err2)
+			err = err2
 			continue
 		} else {
 			// 查找是否获取到
 			if -1 == root.Find(`h3`).Index() {
 				err = errors.New("404 Not Found")
+				log.Println(err)
 				continue
 			}
 
 			resp.No = that.no
 			resp.WebSite = uri
 			resp.Title = root.Find("h3").Text()
+
+			log.Println(len(resp.Title) == 0)
+
+			if len(resp.Title) == 0 {
+				err = errors.New("404 Not Found")
+				continue
+			}
+
 			resp.Intro = ""
 			resp.Director = root.Find(`a[href*="/director/"]`).Text()
 			resp.ReleaseDate = strings.ReplaceAll(root.Find(`p:contains("發行日期:")`).Text(), "發行日期: ", "")
@@ -112,8 +121,5 @@ func (that *javbus) Fetch() (resp ScraperResp, err error) {
 			resp.Actors = actors
 		}
 	}
-
-	// log.Println(htmlBody)
-
-	return resp, nil
+	return resp, err
 }
