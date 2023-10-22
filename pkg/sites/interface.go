@@ -1,5 +1,16 @@
 package sites
 
+import (
+	"errors"
+)
+
+var (
+	ErrorNoNotFound    = errors.New("no not found")
+	ErrorSiteFound     = errors.New("site not found")
+	ErrorTitleNotFound = errors.New("title not found")
+	ErrorCoverNotFound = errors.New("cover not found")
+)
+
 type (
 	IScraper interface {
 		GetPageUri() []string

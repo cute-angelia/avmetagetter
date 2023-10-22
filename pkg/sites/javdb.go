@@ -178,6 +178,11 @@ func (that *javDb) Fetch() (resp ScraperResp, err error) {
 					actors[strings.TrimSpace(item.Text())] = ""
 				})
 				resp.Actors = actors
+
+				if len(resp.Cover) == 0 {
+					err = ErrorCoverNotFound
+					continue
+				}
 			}
 		}
 

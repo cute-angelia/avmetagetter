@@ -28,13 +28,18 @@ type JsonConfig struct {
 func GetBody(uri string, waitVisible string) (string, error) {
 
 	log.Println(uri, waitVisible)
+
 	// getws
-	actxt, cancelActxt := chromedp.NewRemoteAllocator(context.Background(), GetWs())
+
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancelFunc()
+
+	actxt, cancelActxt := chromedp.NewRemoteAllocator(ctx, GetWs())
 	defer cancelActxt()
 
 	ctxt, cancelCtxt := chromedp.NewContext(actxt, chromedp.WithBrowserOption(
 		chromedp.WithDialTimeout(time.Second*10),
-	)) // create new tab
+	))                 // create new tab
 	defer cancelCtxt() // close tab afterwards
 	var title string
 	var htmlContent string

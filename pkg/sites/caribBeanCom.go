@@ -120,6 +120,11 @@ func (that *caribBeanCom) Fetch() (resp ScraperResp, err error) {
 			})
 			resp.Actors = actors
 
+			if len(resp.Cover) == 0 {
+				err = ErrorCoverNotFound
+				continue
+			}
+
 			if len(resp.Title) < 10 {
 				err = errors.New("title not right")
 				continue

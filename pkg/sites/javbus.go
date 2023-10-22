@@ -119,6 +119,11 @@ func (that *javbus) Fetch() (resp ScraperResp, err error) {
 				actors[strings.TrimSpace(name)] = strings.TrimSpace(img)
 			})
 			resp.Actors = actors
+
+			if len(resp.Cover) == 0 {
+				err = ErrorCoverNotFound
+				continue
+			}
 		}
 	}
 	return resp, err

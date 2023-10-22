@@ -114,9 +114,9 @@ func (that *tokyohot) Fetch() (resp ScraperResp, err error) {
 			actors := make(map[string]string)
 			resp.Actors = actors
 
-			if len(resp.Title) > 10 {
-				err = errors.New("title not right")
-				break
+			if len(resp.Cover) == 0 {
+				err = ErrorCoverNotFound
+				continue
 			}
 		}
 	}

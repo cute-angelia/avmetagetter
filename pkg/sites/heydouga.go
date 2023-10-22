@@ -168,8 +168,8 @@ func (that *heydouga) Fetch() (resp ScraperResp, err error) {
 			}
 			resp.Actors = actors
 
-			if len(resp.Title) < 10 {
-				err = errors.New("title not right")
+			if len(resp.Cover) == 0 {
+				err = ErrorCoverNotFound
 				continue
 			}
 		}
