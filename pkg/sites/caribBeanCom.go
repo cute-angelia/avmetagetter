@@ -119,6 +119,11 @@ func (that *caribBeanCom) Fetch() (resp ScraperResp, err error) {
 				actors[strings.TrimSpace(item.Text())] = ""
 			})
 			resp.Actors = actors
+
+			if len(resp.Title) < 10 {
+				err = errors.New("title not right")
+				continue
+			}
 		}
 	}
 	// log.Println(htmlBody)

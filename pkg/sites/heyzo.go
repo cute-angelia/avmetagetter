@@ -167,8 +167,9 @@ func (that *heyzo) Fetch() (resp ScraperResp, err error) {
 			actors[js.Actor.Name] = "https:" + js.Actor.Image
 			resp.Actors = actors
 
-			if len(resp.Title) > 10 {
-				break
+			if len(resp.Title) < 10 {
+				err = errors.New("title not right")
+				continue
 			}
 		}
 	}

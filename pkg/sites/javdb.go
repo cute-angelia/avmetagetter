@@ -97,6 +97,12 @@ func (that *javDb) Fetch() (resp ScraperResp, err error) {
 					t += selection.Text() + " "
 				})
 				resp.Title = strings.TrimSpace(t)
+
+				if len(resp.Title) < 10 {
+					err = errors.New("title not right")
+					continue
+				}
+
 				resp.Intro = ""
 
 				// 获取数据
