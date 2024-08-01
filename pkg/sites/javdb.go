@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/cute-angelia/avmetagetter/pkg/utils"
 	"github.com/cute-angelia/go-utils/syntax/iurl"
-	"github.com/cute-angelia/metagetter/pkg/utils"
 	"log"
 	"strings"
 )

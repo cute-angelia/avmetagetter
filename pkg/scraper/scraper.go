@@ -1,8 +1,8 @@
 package scraper
 
 import (
+	"github.com/cute-angelia/avmetagetter/pkg/sites"
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
-	"github.com/cute-angelia/metagetter/pkg/sites"
 	"github.com/spf13/viper"
 	"log"
 	"regexp"

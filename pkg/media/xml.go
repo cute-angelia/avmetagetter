@@ -1,6 +1,6 @@
 package media
 
-import "github.com/cute-angelia/metagetter/pkg/sites"
+import "github.com/cute-angelia/avmetagetter/pkg/sites"
 
 // media base
 type (
