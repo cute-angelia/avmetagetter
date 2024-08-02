@@ -118,9 +118,14 @@ func fire(dir string, dest string) error {
 					actorName = "未知"
 				}
 
+				// linux 最大字符 255
+				title = MaxLength(title, 80)
+
 				// 生成目标文件夹
 				// 规则 [2019] STARS-065 ナマ派 初中出し解禁 本庄鈴
 				destdir = fmt.Sprintf("%s/[%s] %s", actorName, nfo.Year, title)
+
+				loggerV3.GetLogger().Info().Str("生成目标文件夹", destdir).Send()
 
 				// 生成 inf
 				nfoPath := filepath.Join(dest, destdir, fmt.Sprintf("%s.nfo", ifile.NameNoExt(avfile)))
@@ -156,5 +161,19 @@ func fire(dir string, dest string) error {
 			}
 		}
 		return nil
+	}
+}
+
+// MaxLength 文本最大长度 已经放入go-utils
+func MaxLength(txt string, size int) string {
+	//将字符串转为[]rune类型
+	txtRune := []rune(txt)
+	fLength := len(txtRune)
+	diff := fLength - size
+
+	if diff > 0 {
+		return string(txtRune[diff:fLength])
+	} else {
+		return txt
 	}
 }
