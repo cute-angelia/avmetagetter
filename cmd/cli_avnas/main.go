@@ -123,7 +123,7 @@ func fire(dir string, dest string) error {
 				destdir = fmt.Sprintf("%s/[%s] %s", actorName, nfo.Year, title)
 
 				// 生成 inf
-				nfoPath := filepath.Join(dest, destdir, fmt.Sprintf("%s.nfo", no))
+				nfoPath := filepath.Join(dest, destdir, fmt.Sprintf("%s.nfo", ifile.NameNoExt(avfile)))
 				nfoFile, _ := ifile.OpenLocalFile(nfoPath)
 				os.Truncate(nfoPath, 0)
 				nfobyte, _ := nfo.Marshal()
