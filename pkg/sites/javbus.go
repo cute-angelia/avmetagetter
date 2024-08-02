@@ -70,8 +70,6 @@ func (that *javbus) Fetch() (resp ScraperResp, err error) {
 			resp.WebSite = uri
 			resp.Title = root.Find("h3").Text()
 
-			log.Println(len(resp.Title) == 0)
-
 			if len(resp.Title) == 0 {
 				err = errors.New("404 Not Found")
 				continue

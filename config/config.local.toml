@@ -1,0 +1,12 @@
+[common]
+socks5 = "socks5://host-bwg-new.x.x:38153"
+
+[javbus]
+site = "https://www.javbus.com/"
+useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+cookies = "x"
+
+# 特殊站 JavLibrary JavDb 需要
+# chromedp/headless-shell:latest
+[chromedp]
+addr = "http://192.xx.xx.xx:3120/json/version"

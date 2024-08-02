@@ -125,7 +125,6 @@ func (that *scraper) Search() (resp sites.ScraperResp, err error) {
 				log.Println("err", err)
 				continue
 			} else {
-				log.Println("err return", err)
 				return
 			}
 		}

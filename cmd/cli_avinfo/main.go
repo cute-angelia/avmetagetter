@@ -3,6 +3,7 @@ package main
 import (
 	_ "embed"
 	"errors"
+	"github.com/cute-angelia/avmetagetter/config"
 	"github.com/cute-angelia/avmetagetter/pkg/media"
 	"github.com/cute-angelia/avmetagetter/pkg/scraper"
 	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
@@ -16,16 +17,21 @@ import (
 )
 
 func main() {
-	// config.toml
-	conf.MustLoadConfigFile("config.toml")
 
 	// logger
 	loggerV3.New(loggerV3.WithIsOnline(false))
 
 	var no string
 	var captureNames string
+	var envstr string
 	app := &cli.App{
 		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "env",
+				Value:       "local",
+				Usage:       "环境变量",
+				Destination: &envstr,
+			},
 			&cli.StringFlag{
 				Name:        "no",
 				Value:       "",
@@ -44,6 +50,11 @@ func main() {
 			},
 		},
 		Action: func(cCtx *cli.Context) error {
+
+			// config
+			config.InitConfig(envstr)
+			conf.MergeConfigWithPath("./")
+
 			if len(no) == 0 {
 				if cCtx.NArg() > 0 {
 					no = cCtx.Args().Get(0)

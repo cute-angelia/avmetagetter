@@ -114,6 +114,17 @@ func (m *NfoJav) ParseMedia(resp sites.ScraperResp) {
 	m.Sample = resp.SampleImg
 }
 
+// SetPoster 半图
+func (m *NfoJav) SetPoster(poster string) {
+	m.Thumb = poster
+	m.Poster = poster
+}
+
+// SetFanArt 全图
+func (m *NfoJav) SetFanArt(fanArt string) {
+	m.FanArt = fanArt
+}
+
 func (m *NfoJav) Marshal() ([]byte, error) {
 	// 转换
 	x, err := xml.MarshalIndent(m, "", "  ")
