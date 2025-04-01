@@ -78,6 +78,7 @@ func (that *javDb202504) Fetch() (resp ScraperResp, err error) {
 			t := ""
 			root.Find(`.movie-list .video-title`).Each(func(i int, selection *goquery.Selection) {
 				titlefind := strings.ToUpper(selection.Text())
+				//log.Println(titlefind, "xxtitlefind")
 				if strings.Contains(titlefind, strings.ToUpper(that.no)) {
 					t += selection.Text() + " "
 					contentHref, _ := selection.Parent().Attr("href")
@@ -86,7 +87,7 @@ func (that *javDb202504) Fetch() (resp ScraperResp, err error) {
 			})
 			resp.Title = strings.TrimSpace(t)
 
-			if len(resp.Title) < 10 {
+			if len(resp.Title) < 6 {
 				err = errors.New("title not right")
 				break
 			}
