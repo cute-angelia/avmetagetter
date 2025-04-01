@@ -52,6 +52,13 @@ func (that *scraper) getCaptures() []captures {
 			Enable:       false, // 关闭
 		},
 		{
+			Name:         "JavDb202504",
+			Scraper:      sites.NewJavDb202504(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:          regexp.MustCompile(`^[a-zA-Z-0-9]{2,15}$`),
+			Enable:       true,
+			NeedChromeDp: true,
+		},
+		{
 			Name:         "JavDb",
 			Scraper:      sites.NewJavDb(that.no, DefaultUserAgent, "", that.proxy),
 			Reg:          regexp.MustCompile(`^[a-zA-Z-0-9]{2,15}$`),

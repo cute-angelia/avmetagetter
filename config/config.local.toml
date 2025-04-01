@@ -9,4 +9,4 @@ cookies = "x"
 # 特殊站 JavLibrary JavDb 需要
 # chromedp/headless-shell:latest
 [chromedp]
-addr = "http://192.xx.xx.xx:3120/json/version"
+addr = "http://192.168.3.36:38120/json/version"
