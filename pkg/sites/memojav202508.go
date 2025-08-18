@@ -109,6 +109,11 @@ func (that *memojav202508) Fetch() (resp ScraperResp, err error) {
 						resp.Studio = selection.Find("td").First().Text()
 					}
 
+					// Label
+					if strings.Contains(selection.Find("th").First().Text(), "Label") {
+						resp.Label = selection.Find("td").First().Text()
+					}
+
 					// 系列
 					if strings.Contains(selection.Find("th").First().Text(), "Series") {
 						resp.Series = selection.Find("td a").First().Text()

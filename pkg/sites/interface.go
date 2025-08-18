@@ -25,6 +25,7 @@ type (
 		Runtime     string            // 时长
 		Studio      string            // 获取厂商
 		Series      string            // 系列
+		Label       string            // like: SOD star
 		Tags        []string          // 标签
 		Cover       string            // 封面
 		SampleImg   []string          // 获取样图
