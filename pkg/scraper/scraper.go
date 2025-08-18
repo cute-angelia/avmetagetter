@@ -107,6 +107,12 @@ func (that *scraper) getCaptures() []captures {
 			Reg:     regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
 			Enable:  true,
 		},
+		{
+			Name:    "memojav202508",
+			Scraper: sites.NewMemojav202508(that.no, DefaultUserAgent, "coc=1; adc=1", that.proxy),
+			Reg:     regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
+			Enable:  true,
+		},
 	}
 	if len(that.captureNames) > 0 && len(that.captureNames[0]) > 0 {
 		var cs2 []captures
