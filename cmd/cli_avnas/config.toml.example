@@ -1,0 +1,22 @@
+[common]
+socks5 = "socks5://xxxxx:38153"
+
+[javbus]
+site = "https://www.javxxxxbus.com/"
+useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+cookies = ""
+
+# 特殊站 JavLibrary JavDb 需要
+# chromedp/headless-shell:latest
+[chromedp]
+addr = "http://192.168.3.36:38120/json/version"
+
+# nas 可以配置路径，方便不用每次输
+[avnas]
+dir = "/Users/vanilla/Downloads/no"
+dest = "/Users/vanilla/Downloads/no/jav"
+
+# nas 可以配置路径，方便不用每次输
+#[avnas]
+#dir = "/share/Media/costar/video-station/no"
+#dest = "/share/Media/costar/video-station/no/jav"
