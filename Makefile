@@ -12,7 +12,7 @@ tag:
 	git add .
 	git commit -am "因为番号乱蹿问题，返回多个结果"
 	git push origin v2
-	git tag v1.1.12
+	git tag v1.1.15
 	git push --tags
 	@echo "\n tags 发布中..."
 
