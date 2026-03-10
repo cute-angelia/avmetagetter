@@ -3,23 +3,25 @@ package main
 import (
 	_ "embed"
 	"errors"
-	"github.com/cute-angelia/avmetagetter/config"
-	"github.com/cute-angelia/avmetagetter/pkg/media"
-	"github.com/cute-angelia/avmetagetter/pkg/scraper"
-	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
-	"github.com/cute-angelia/go-utils/syntax/ijson"
-	"github.com/cute-angelia/go-utils/utils/conf"
-	"github.com/spf13/viper"
-	"github.com/urfave/cli/v2"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/cute-angelia/avmetagetter/config"
+	"github.com/cute-angelia/avmetagetter/pkg/media"
+	"github.com/cute-angelia/avmetagetter/pkg/scraper"
+	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
+	"github.com/cute-angelia/go-xutils/syntax/ijson"
+	"github.com/cute-angelia/go-xutils/utils/conf"
+	"github.com/spf13/viper"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
 
 	// logger
 	loggerV3.New(loggerV3.WithIsOnline(false))
+	defer loggerV3.Stop()
 
 	var no string
 	var captureNames string
@@ -53,7 +55,7 @@ func main() {
 
 			// config
 			config.InitConfig(envstr)
-			conf.MergeConfigWithPath("./")
+			conf.MergeConfigWithPath("./config.yaml")
 
 			if len(no) == 0 {
 				if cCtx.NArg() > 0 {
@@ -62,16 +64,18 @@ func main() {
 			}
 			if len(no) > 0 {
 				iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"), strings.Split(captureNames, ","))
-				if resp, err := iscraper.Search(); err != nil {
+				if resps, err := iscraper.Search(); err != nil {
 					return err
 				} else {
 					// nfo
 					if cCtx.Bool("nfo") {
-						nfo := media.NewNfoJav()
-						nfo.ParseMedia(resp)
-						log.Println(ijson.Pretty(nfo))
+						for _, resp := range resps {
+							nfo := media.NewNfoJav()
+							nfo.ParseMedia(resp)
+							log.Println(ijson.Pretty(nfo))
+						}
 					} else {
-						log.Println(ijson.Pretty(resp))
+						log.Println(ijson.Pretty(resps))
 					}
 					return nil
 				}

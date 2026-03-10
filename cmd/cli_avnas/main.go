@@ -4,21 +4,22 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
-	"github.com/cute-angelia/avmetagetter/config"
-	"github.com/cute-angelia/avmetagetter/pkg/media"
-	"github.com/cute-angelia/avmetagetter/pkg/scraper"
-	"github.com/cute-angelia/avmetagetter/pkg/utils"
-	"github.com/cute-angelia/go-utils/components/idownload"
-	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
-	"github.com/cute-angelia/go-utils/syntax/ifile"
-	"github.com/cute-angelia/go-utils/utils/conf"
-	"github.com/spf13/viper"
-	"github.com/urfave/cli/v2"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/cute-angelia/avmetagetter/config"
+	"github.com/cute-angelia/avmetagetter/pkg/media"
+	"github.com/cute-angelia/avmetagetter/pkg/scraper"
+	"github.com/cute-angelia/avmetagetter/pkg/utils"
+	"github.com/cute-angelia/go-xutils/components/idownload"
+	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
+	"github.com/cute-angelia/go-xutils/syntax/ifile"
+	"github.com/cute-angelia/go-xutils/utils/conf"
+	"github.com/spf13/viper"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -88,76 +89,80 @@ func fire(dir string, dest string) error {
 			log.Println("处理：", avfile, "-->", no)
 			// 抓取信息
 			iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"), []string{})
-			if resp, err := iscraper.Search(); err != nil {
+			if resps, err := iscraper.Search(); err != nil {
 				loggerV3.GetLogger().Err(err).Str("抓取失败", no).Send()
 				continue
 			} else {
 
-				destdir := ""
-				title := ""
-				if !strings.Contains(resp.Title, no) {
-					title = no + " "
-				} else {
-					title = resp.Title
+				for _, resp := range resps {
+
+					destdir := ""
+					title := ""
+					if !strings.Contains(resp.Title, no) {
+						title = no + " "
+					} else {
+						title = resp.Title
+					}
+
+					if len(resp.Title) == 0 {
+						return errors.New("抓取失败 " + no)
+					}
+
+					// nfo
+					nfo := media.NewNfoJav()
+					nfo.ParseMedia(resp)
+					nfo.SetPoster("poster.jpg")
+					nfo.SetFanArt("fanart.jpg")
+
+					actorName := ""
+					if len(nfo.Actor) > 0 {
+						actorName = nfo.Actor[0].Name
+					} else {
+						actorName = "未知"
+					}
+
+					// linux 最大字符 255
+					title = MaxLength(title, 80)
+
+					// 生成目标文件夹
+					// 规则 [2019] STARS-065 ナマ派 初中出し解禁 本庄鈴
+					destdir = fmt.Sprintf("%s/[%s] %s", actorName, nfo.Year, title)
+
+					loggerV3.GetLogger().Info().Str("生成目标文件夹", destdir).Send()
+
+					// 生成 inf
+					nfoPath := filepath.Join(dest, destdir, fmt.Sprintf("%s.nfo", ifile.NameNoExt(avfile)))
+					nfoFile, _ := ifile.CreateFile(nfoPath)
+					os.Truncate(nfoPath, 0)
+					nfobyte, _ := nfo.Marshal()
+					nfoFile.Write(nfobyte)
+					nfoFile.Close()
+
+					// 生成图片
+
+					idown := idownload.New(
+						idownload.WithProxySocks5(viper.GetString("common.socks5")),
+						idownload.WithTimeout(time.Minute),
+						idownload.WithReferer(viper.GetString("javbus.site")),
+						idownload.WithCookie(viper.GetString("javbus.cookies")),
+						idownload.WithUserAgent(viper.GetString("javbus.useragent")),
+					)
+
+					fanart := filepath.Join(dest, destdir, "fanart.jpg")
+					thumb := filepath.Join(dest, destdir, "poster.jpg")
+					if _, err := idown.Download(resp.Cover, fanart); err != nil {
+						log.Println(err)
+					}
+
+					utils.MakeThumbCover(fanart, thumb)
+
+					// 移动资源到目标文件夹
+					dst := filepath.Join(dest, destdir, ifile.Name(avfile))
+					os.Rename(avfile, dst)
+
+					loggerV3.GetLogger().Info().Str("目标路径", dst).Send()
+
 				}
-
-				if len(resp.Title) == 0 {
-					return errors.New("抓取失败 " + no)
-				}
-
-				// nfo
-				nfo := media.NewNfoJav()
-				nfo.ParseMedia(resp)
-				nfo.SetPoster("poster.jpg")
-				nfo.SetFanArt("fanart.jpg")
-
-				actorName := ""
-				if len(nfo.Actor) > 0 {
-					actorName = nfo.Actor[0].Name
-				} else {
-					actorName = "未知"
-				}
-
-				// linux 最大字符 255
-				title = MaxLength(title, 80)
-
-				// 生成目标文件夹
-				// 规则 [2019] STARS-065 ナマ派 初中出し解禁 本庄鈴
-				destdir = fmt.Sprintf("%s/[%s] %s", actorName, nfo.Year, title)
-
-				loggerV3.GetLogger().Info().Str("生成目标文件夹", destdir).Send()
-
-				// 生成 inf
-				nfoPath := filepath.Join(dest, destdir, fmt.Sprintf("%s.nfo", ifile.NameNoExt(avfile)))
-				nfoFile, _ := ifile.OpenLocalFile(nfoPath)
-				os.Truncate(nfoPath, 0)
-				nfobyte, _ := nfo.Marshal()
-				nfoFile.Write(nfobyte)
-				nfoFile.Close()
-
-				// 生成图片
-
-				idown := idownload.New(
-					idownload.WithProxySocks5(viper.GetString("common.socks5")),
-					idownload.WithTimeout(time.Minute),
-					idownload.WithReferer(viper.GetString("javbus.site")),
-					idownload.WithCookie(viper.GetString("javbus.cookies")),
-					idownload.WithUserAgent(viper.GetString("javbus.useragent")),
-				)
-
-				fanart := filepath.Join(dest, destdir, "fanart.jpg")
-				thumb := filepath.Join(dest, destdir, "poster.jpg")
-				if _, err := idown.Download(resp.Cover, fanart); err != nil {
-					log.Println(err)
-				}
-
-				utils.MakeThumbCover(fanart, thumb)
-
-				// 移动资源到目标文件夹
-				dst := filepath.Join(dest, destdir, ifile.Name(avfile))
-				os.Rename(avfile, dst)
-
-				loggerV3.GetLogger().Info().Str("目标路径", dst).Send()
 			}
 		}
 		return nil

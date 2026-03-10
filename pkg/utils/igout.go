@@ -1,10 +1,11 @@
 package utils
 
 import (
-	"github.com/guonaihong/gout"
-	"github.com/guonaihong/gout/dataflow"
 	"strings"
 	"time"
+
+	"github.com/guonaihong/gout"
+	"github.com/guonaihong/gout/dataflow"
 )
 
 var igout *gout.Client

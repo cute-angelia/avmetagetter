@@ -2,7 +2,8 @@ package config
 
 import (
 	_ "embed"
-	"github.com/cute-angelia/go-utils/utils/conf"
+
+	"github.com/cute-angelia/go-xutils/utils/conf"
 )
 
 //go:embed config.local.toml

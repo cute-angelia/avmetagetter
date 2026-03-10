@@ -1,11 +1,12 @@
 package scraper
 
 import (
-	"github.com/cute-angelia/avmetagetter/pkg/sites"
-	"github.com/cute-angelia/go-utils/components/loggers/loggerV3"
-	"github.com/spf13/viper"
 	"log"
 	"regexp"
+
+	"github.com/cute-angelia/avmetagetter/pkg/sites"
+	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -25,6 +26,7 @@ type captures struct {
 	Reg          *regexp.Regexp
 	Enable       bool
 	NeedChromeDp bool // 需要安装chromeDp
+	Desc         string
 }
 
 func NewScraper(no string, proxy string, captureNames []string) *scraper {
@@ -66,10 +68,24 @@ func (that *scraper) getCaptures() []captures {
 			NeedChromeDp: true,
 		},
 		{
+			Name:    "CaribBeanComPr",
+			Scraper: sites.NewCaribBeanComPr(that.no, viper.GetString("caribbeancompr.useragent"), viper.GetString("caribbeancompr.cookies"), that.proxy),
+			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
+			Enable:  true,
+			Desc:    "无敌了，番号乱踹",
+		},
+		{
 			Name:    "CaribBeanCom",
 			Scraper: sites.NewCaribBeanCom(that.no, DefaultUserAgent, "", that.proxy),
 			Reg:     regexp.MustCompile(`^\d{6}-\d{3}$`),
 			Enable:  true,
+		},
+		{
+			Name:    "1pondo",
+			Scraper: sites.NewPondo1(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
+			Enable:  true,
+			Desc:    "api接口，但是只能获取5个缩略图，有会员限制",
 		},
 		{
 			Name:    "DMM",
@@ -129,16 +145,20 @@ func (that *scraper) getCaptures() []captures {
 	}
 }
 
-func (that *scraper) Search() (resp sites.ScraperResp, err error) {
+// Search 返回多个结果, 不同番号，在加勒比乱蹿问题
+func (that *scraper) Search() (resps []sites.ScraperResp, err error) {
 	icaptures := that.getCaptures()
 	for _, item := range icaptures {
+		//log.Println(item.Name, that.no, item.Reg, item.Reg.MatchString(that.no))
 		if item.Enable && item.Reg.MatchString(that.no) {
 			loggerV3.GetLogger().Info().Str("Matched", that.no).Str("site", item.Name).Send()
-			if resp, err = item.Scraper.Fetch(); err != nil {
+			if resp, err := item.Scraper.Fetch(); err != nil {
 				log.Println("err", err)
 				continue
 			} else {
-				return
+				if len(resp.Title) > 0 {
+					resps = append(resps, resp)
+				}
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/cute-angelia/go-utils/utils/iimage"
+	"github.com/cute-angelia/go-xutils/utils/iimage"
 )
 
 // MakeThumbCover 图片进行裁剪

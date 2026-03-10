@@ -3,7 +3,7 @@ package media
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/cute-angelia/go-utils/utils/generator/hash"
+	"github.com/cute-angelia/go-xutils/utils/generator/hash"
 )
 
 // NfoMovie 信息结构，

@@ -3,13 +3,14 @@ package sites
 import (
 	"errors"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
-	"github.com/cute-angelia/avmetagetter/pkg/utils"
-	"github.com/cute-angelia/go-utils/syntax/itime"
-	"github.com/cute-angelia/go-utils/syntax/iurl"
-	"github.com/guonaihong/gout"
 	"log"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
+	"github.com/cute-angelia/avmetagetter/pkg/utils"
+	"github.com/cute-angelia/go-xutils/syntax/itime"
+	"github.com/cute-angelia/go-xutils/syntax/iurl"
+	"github.com/guonaihong/gout"
 )
 
 // test : go run main.go -no=START-353 -scraper=memojav202508
@@ -145,7 +146,7 @@ func (that *memojav202508) Fetch() (resp ScraperResp, err error) {
 				if strings.Contains(selection.Find("h2").Text(), "Release Date") {
 					tz := selection.Find("p").Text()
 					tzz := itime.NewFormatLayout(tz, "2006/01/02")
-					resp.ReleaseDate = tzz.FormatDate()
+					resp.ReleaseDate = tzz.Format(itime.WithFormatOnlyDate())
 				}
 			})
 
