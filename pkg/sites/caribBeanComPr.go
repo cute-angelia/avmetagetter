@@ -103,7 +103,7 @@ func (that *caribBeanComPr) Fetch() (resp ScraperResp, err error) {
 			resp.ReleaseDate = ""
 
 			// 获取cover图片
-			resp.Cover = that.site + "/" + "/moviepages/" + that.no + "/images/l_l.jpg"
+			resp.Cover = that.site + "/moviepages/" + that.no + "/images/l_l.jpg"
 
 			// 获取sample图片
 			sample := []string{}
