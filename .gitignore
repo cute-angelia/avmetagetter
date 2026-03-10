@@ -31,5 +31,6 @@ cmd/*.toml
 .DS_Store
 error
 
+config.toml
 config.toml.2
 config.toml.1
