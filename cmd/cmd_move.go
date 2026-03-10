@@ -1,7 +1,10 @@
-package main
+package cmd
 
 import (
-	_ "embed"
+	"avmetagetter/config"
+	"avmetagetter/pkg/media"
+	"avmetagetter/pkg/scraper"
+	"avmetagetter/pkg/utils"
 	"errors"
 	"fmt"
 	"log"
@@ -10,10 +13,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cute-angelia/avmetagetter/config"
-	"github.com/cute-angelia/avmetagetter/pkg/media"
-	"github.com/cute-angelia/avmetagetter/pkg/scraper"
-	"github.com/cute-angelia/avmetagetter/pkg/utils"
 	"github.com/cute-angelia/go-xutils/components/idownload"
 	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
 	"github.com/cute-angelia/go-xutils/syntax/ifile"
@@ -22,58 +21,63 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func main() {
-	// logger
-	loggerV3.New(loggerV3.WithIsOnline(false))
-
-	var dir string
-	var dest string
-	var envstr string
-	app := &cli.App{
+func NewCmdMove() *cli.Command {
+	return &cli.Command{
+		Name:        "move",
+		Usage:       "move -dir={dir} -dest={dest} -env={local} -scraper={scraper}",
+		Description: "扫描文件夹，将nfo等信息移动到目标文件夹",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:        "env",
-				Value:       "local",
-				Usage:       "环境变量",
-				Destination: &envstr,
+				Name:  "env",
+				Value: "local",
+				Usage: "环境变量",
 			},
 			&cli.StringFlag{
-				Name:        "dir",
-				Value:       "./",
-				Usage:       "扫描文件夹",
-				Destination: &dir,
+				Name:  "dir",
+				Value: "./",
+				Usage: "扫描文件夹",
 			},
 			&cli.StringFlag{
-				Name:        "dest",
-				Value:       "./jav",
-				Usage:       "目标文件夹",
-				Destination: &dest,
+				Name:  "dest",
+				Value: "./jav",
+				Usage: "目标文件夹",
+			},
+			&cli.StringFlag{
+				Name:  "scraper",
+				Value: "",
+				Usage: "指定scraper：JavBus JavDb CaribBeanCom FC2 TokyoHot Heyzo Heydouga Siro memojav202508等",
 			},
 		},
-		Action: func(cCtx *cli.Context) error {
+
+		Action: func(c *cli.Context) error {
+
+			envstr := c.String("env")
+			dirIn := c.String("dir")
+			destIn := c.String("dest")
+			captureNames := c.String("scraper")
+
+			// 加载 config
 			config.InitConfig(envstr)
-			conf.MergeConfigWithPath("./")
-
-			cdir := viper.GetString("avnas.dir")
-			if len(cdir) > 0 {
-				dir = cdir
+			if ifile.IsExist("./config.toml") {
+				if err := conf.MergeConfigWithPath("./config.toml"); err != nil {
+					log.Println(err)
+				}
 			}
 
-			cdest := viper.GetString("avnas.dest")
-			if len(cdest) > 0 {
-				dest = cdest
-			}
+			crps := strings.Split(captureNames, ",")
 
-			return fire(dir, dest)
+			if len(dirIn) == 0 {
+				dirIn = viper.GetString("avnas.dir")
+			}
+			if len(destIn) == 0 {
+				destIn = viper.GetString("avnas.dest")
+			}
+			return fire(dirIn, destIn, crps)
 		},
-	}
-
-	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
 	}
 }
 
-func fire(dir string, dest string) error {
+func fire(dir string, dest string, crps []string) error {
 	exts := []string{
 		".mp4",
 		".m4p",
@@ -87,9 +91,10 @@ func fire(dir string, dest string) error {
 		for _, avfile := range files {
 			no := utils.CleanNo(ifile.NameNoExt(avfile))
 			log.Println("处理：", avfile, "-->", no)
+
 			// 抓取信息
-			iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"), []string{})
-			if resps, err := iscraper.Search(); err != nil {
+			iscraper := scraper.NewScraper(no, viper.GetString("common.socks5"))
+			if resps, err := iscraper.Search(crps); err != nil {
 				loggerV3.GetLogger().Err(err).Str("抓取失败", no).Send()
 				continue
 			} else {
@@ -162,6 +167,8 @@ func fire(dir string, dest string) error {
 
 					loggerV3.GetLogger().Info().Str("目标路径", dst).Send()
 
+					// 只保存一个
+					break
 				}
 			}
 		}

@@ -6,8 +6,9 @@ import (
 	"log"
 	"strings"
 
+	"avmetagetter/pkg/utils"
+
 	"github.com/PuerkitoBio/goquery"
-	"github.com/cute-angelia/avmetagetter/pkg/utils"
 	"github.com/guonaihong/gout"
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"

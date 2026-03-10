@@ -28,5 +28,6 @@ actress
 jav
 
 config.toml.2
-cmd/*/*.toml
+cmd/*.toml
 .DS_Store
+error

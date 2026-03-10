@@ -1,5 +1,6 @@
 [common]
 socks5 = "socks5://host-bwg-new.x.x:38153"
+writeLogFile = false
 
 [javbus]
 site = "https://www.javbus.com/"

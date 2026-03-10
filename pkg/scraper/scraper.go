@@ -4,7 +4,8 @@ import (
 	"log"
 	"regexp"
 
-	"github.com/cute-angelia/avmetagetter/pkg/sites"
+	"avmetagetter/pkg/sites"
+
 	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
 	"github.com/spf13/viper"
 )
@@ -14,9 +15,8 @@ const (
 )
 
 type scraper struct {
-	no           string
-	proxy        string
-	captureNames []string
+	no    string
+	proxy string
 }
 
 // 刮削对象
@@ -29,15 +29,14 @@ type captures struct {
 	Desc         string
 }
 
-func NewScraper(no string, proxy string, captureNames []string) *scraper {
+func NewScraper(no string, proxy string) *scraper {
 	return &scraper{
-		no:           no,
-		proxy:        proxy,
-		captureNames: captureNames,
+		no:    no,
+		proxy: proxy,
 	}
 }
 
-func (that *scraper) getCaptures() []captures {
+func (that *scraper) GetCaptures(captureNames []string) []captures {
 	// 定义一个拥有正则匹配的刮削对象数组
 	cs := []captures{
 		{
@@ -72,7 +71,7 @@ func (that *scraper) getCaptures() []captures {
 			Scraper: sites.NewCaribBeanComPr(that.no, viper.GetString("caribbeancompr.useragent"), viper.GetString("caribbeancompr.cookies"), that.proxy),
 			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
 			Enable:  true,
-			Desc:    "无敌了，番号乱踹",
+			Desc:    "无敌了，番号乱踹, 缩略图有会员限制",
 		},
 		{
 			Name:    "CaribBeanCom",
@@ -85,7 +84,7 @@ func (that *scraper) getCaptures() []captures {
 			Scraper: sites.NewPondo1(that.no, DefaultUserAgent, "", that.proxy),
 			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
 			Enable:  true,
-			Desc:    "api接口，但是只能获取5个缩略图，有会员限制",
+			Desc:    "api接口，但是只能获取5个缩略图有会员限制",
 		},
 		{
 			Name:    "DMM",
@@ -130,10 +129,10 @@ func (that *scraper) getCaptures() []captures {
 			Enable:  true,
 		},
 	}
-	if len(that.captureNames) > 0 && len(that.captureNames[0]) > 0 {
+	if len(captureNames) > 0 && len(captureNames[0]) > 0 {
 		var cs2 []captures
 		for _, c := range cs {
-			for _, name := range that.captureNames {
+			for _, name := range captureNames {
 				if c.Name == name {
 					cs2 = append(cs2, c)
 				}
@@ -146,21 +145,22 @@ func (that *scraper) getCaptures() []captures {
 }
 
 // Search 返回多个结果, 不同番号，在加勒比乱蹿问题
-func (that *scraper) Search() (resps []sites.ScraperResp, err error) {
-	icaptures := that.getCaptures()
+func (that *scraper) Search(captureNames []string) (map[string]sites.ScraperResp, error) {
+	respBack := map[string]sites.ScraperResp{}
+	icaptures := that.GetCaptures(captureNames)
 	for _, item := range icaptures {
 		//log.Println(item.Name, that.no, item.Reg, item.Reg.MatchString(that.no))
 		if item.Enable && item.Reg.MatchString(that.no) {
 			loggerV3.GetLogger().Info().Str("Matched", that.no).Str("site", item.Name).Send()
 			if resp, err := item.Scraper.Fetch(); err != nil {
-				log.Println("err", err)
+				log.Println(item.Name+" Search err:", err)
 				continue
 			} else {
 				if len(resp.Title) > 0 {
-					resps = append(resps, resp)
+					respBack[item.Name] = resp
 				}
 			}
 		}
 	}
-	return
+	return respBack, nil
 }

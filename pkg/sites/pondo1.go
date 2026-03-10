@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cute-angelia/avmetagetter/pkg/utils"
+	"avmetagetter/pkg/utils"
 	"github.com/guonaihong/gout"
 )
 

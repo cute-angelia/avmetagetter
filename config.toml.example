@@ -1,9 +1,14 @@
 [common]
 socks5 = "socks5://xxxxx:38153"
+writeLogFile = false
 
 [javbus]
 site = "https://www.javxxxxbus.com/"
 useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+cookies = ""
+
+[caribbeancompr]
+useragent = ""
 cookies = ""
 
 # 特殊站 JavLibrary JavDb 需要

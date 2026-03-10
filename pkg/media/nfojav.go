@@ -1,9 +1,9 @@
 package media
 
 import (
+	"avmetagetter/pkg/sites"
 	"encoding/xml"
 	"fmt"
-	"github.com/cute-angelia/avmetagetter/pkg/sites"
 	"regexp"
 	"strings"
 )

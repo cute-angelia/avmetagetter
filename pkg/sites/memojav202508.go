@@ -6,8 +6,8 @@ import (
 	"log"
 	"strings"
 
+	"avmetagetter/pkg/utils"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/cute-angelia/avmetagetter/pkg/utils"
 	"github.com/cute-angelia/go-xutils/syntax/itime"
 	"github.com/cute-angelia/go-xutils/syntax/iurl"
 	"github.com/guonaihong/gout"

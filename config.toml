@@ -1,0 +1,25 @@
+[common]
+socks5 = "socks5://host-bwg-new.aaqq.in:38153"
+
+[javbus]
+site = "https://www.javbus.com/"
+useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+cookies = "4fJN_2132_seccodecSnPnuzG=17321.ccaa8292ce4767dc6f; PHPSESSID=cvq9d8cvp88k7j60ef9a6ba954; 4fJN_2132_seccodecSAbpHw1FZBf=29482.a5886ff1399b9407b4; 4fJN_2132_home_diymode=1; 4fJN_2132_seccodecSAcrHfolopO=23724.a9934b14e938157000; 4fJN_2132_seccodecSAYLqVbZ1rR=68149.250a3a89263525d970; dv=1; 4fJN_2132_seccodecSAuPtn4brvJ=25855.419ced6464bf7efd0e; 4fJN_2132_lip=23.105.211.14%2C1709911555; existmag=mag; 4fJN_2132_st_p=0%7C1713684216%7Cd5beaca953e95a2d20a9e7b63924c12e; 4fJN_2132_viewid=tid_135947; 4fJN_2132_st_t=0%7C1713685119%7Ca43db31eb35a85bac15958c739ec8496; 4fJN_2132_saltkey=x7r8jIZi; 4fJN_2132_lastvisit=1718453116; 4fJN_2132_sid=pcGYaS; 4fJN_2132_seccodecSAyxGpcGYaS=18875.136f9be69fcc0df12d; 4fJN_2132_ulastactivity=5a9cCclwRqO55AAhaXuD%2B3ED8PsrWwgaf7lUQbMUhgIoybXExO7l; 4fJN_2132_lastcheckfeed=40347%7C1718456738; 4fJN_2132_auth=42960TT4TC%2BoG40Qg0F1qfvwYoquPqwTyT1K08HGHaugm3QcHxUutZzvZEdOXfXi4Uro3JnlgTihXFoiSQ7vPU0rOQ; bus_auth=3831ixROfrwLSPWwjYDzMtGb2FBJ0LFh2%2F8wHTRXBYeR7Asrkrfj65AZtPl5; 4fJN_2132_nofavfid=1; 4fJN_2132_lastact=1718456767%09index.php%09"
+
+[caribbeancompr]
+useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+cookies = "PHPSESSID=tu5i6np2n53ompqupmu8vl0eo7; NetiA=1lgHxqoKIqAv2cE9JkeaJX36JjcyOHSDOM1KOqUD.HSiOMSi.H1HOqF-.H2KIlFcOMxnxkx0OlxnxqEA.MFZOqElOqOc.jOZ2qoiOMF3; newbunki=1; item_list_name=Index2 ã‚¹ã‚¿ãƒƒãƒ•ä¸€æŠ¼ã—"
+
+# chromedp/headless-shell:latest
+[chromedp]
+addr = "http://192.168.3.36:38120/json/version"
+
+# nas 可以配置路径，方便不用每次输
+[avnas]
+dir = "/Users/vanilla/Downloads/no"
+dest = "/Users/vanilla/Downloads/no/jav"
+
+# nas 可以配置路径，方便不用每次输
+#[avnas]
+#dir = "/share/Media/costar/video-station/no"
+#dest = "/share/Media/costar/video-station/no/jav"
