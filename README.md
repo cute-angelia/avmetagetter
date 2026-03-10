@@ -19,3 +19,10 @@ help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
 --help, -h  show help
+
+
+### 支持引入包
+
+```golang
+import "github.com/cute-angelia/avmetagetter/pkg/scraper"
+```

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"avmetagetter/pkg/scraper"
+	"github.com/cute-angelia/avmetagetter/pkg/scraper"
 	"log"
 
 	"github.com/urfave/cli/v2"

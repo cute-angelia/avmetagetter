@@ -1,11 +1,12 @@
 package cmd
 
 import (
-	"avmetagetter/config"
-	"avmetagetter/pkg/media"
-	"avmetagetter/pkg/scraper"
 	"log"
 	"strings"
+
+	"github.com/cute-angelia/avmetagetter/config"
+	"github.com/cute-angelia/avmetagetter/pkg/media"
+	"github.com/cute-angelia/avmetagetter/pkg/scraper"
 
 	"github.com/cute-angelia/go-xutils/syntax/ifile"
 	"github.com/cute-angelia/go-xutils/syntax/ijson"

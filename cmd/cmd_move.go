@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	"avmetagetter/config"
-	"avmetagetter/pkg/media"
-	"avmetagetter/pkg/scraper"
-	"avmetagetter/pkg/utils"
 	"errors"
 	"fmt"
+	"github.com/cute-angelia/avmetagetter/config"
+	"github.com/cute-angelia/avmetagetter/pkg/media"
+	"github.com/cute-angelia/avmetagetter/pkg/scraper"
+	"github.com/cute-angelia/avmetagetter/pkg/utils"
 	"log"
 	"os"
 	"path/filepath"

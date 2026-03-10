@@ -1,4 +1,4 @@
-module  avmetagetter
+module  github.com/cute-angelia/avmetagetter
 
 go 1.26.0
 

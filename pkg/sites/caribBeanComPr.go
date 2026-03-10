@@ -6,7 +6,7 @@ import (
 	"log"
 	"strings"
 
-	"avmetagetter/pkg/utils"
+	"github.com/cute-angelia/avmetagetter/pkg/utils"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/guonaihong/gout"

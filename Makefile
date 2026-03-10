@@ -10,9 +10,9 @@ up:
 tag:
 	git pull origin v2
 	git add .
-	git commit -am "因为番号乱蹿问题，返回多个结果"
+	git commit -am "支持包"
 	git push origin v2
-	git tag v1.1.16
+	git tag v1.1.17
 	git push --tags
 	@echo "\n tags 发布中..."
 

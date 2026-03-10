@@ -4,7 +4,7 @@ import (
 	"log"
 	"regexp"
 
-	"avmetagetter/pkg/sites"
+	"github.com/cute-angelia/avmetagetter/pkg/sites"
 
 	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
 	"github.com/spf13/viper"

@@ -1,10 +1,10 @@
 package sites
 
 import (
-	"avmetagetter/pkg/utils"
 	"errors"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/cute-angelia/avmetagetter/pkg/utils"
 	"log"
 	"strings"
 )

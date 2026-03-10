@@ -1,10 +1,11 @@
 package main
 
 import (
-	"avmetagetter/cmd"
 	_ "embed"
 	"log"
 	"os"
+
+	"github.com/cute-angelia/avmetagetter/cmd"
 
 	"github.com/cute-angelia/go-xutils/components/loggers/loggerV3"
 	"github.com/urfave/cli/v2"
