@@ -67,6 +67,13 @@ func (that *scraper) GetCaptures(captureNames []string) []captures {
 			NeedChromeDp: true,
 		},
 		{
+			Name:    "1pondo",
+			Scraper: sites.NewPondo1(that.no, DefaultUserAgent, "", that.proxy),
+			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
+			Enable:  true,
+			Desc:    "api接口，但是只能获取5个缩略图有会员限制",
+		},
+		{
 			Name:    "CaribBeanComPr",
 			Scraper: sites.NewCaribBeanComPr(that.no, viper.GetString("caribbeancompr.useragent"), viper.GetString("caribbeancompr.cookies"), that.proxy),
 			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
@@ -79,13 +86,7 @@ func (that *scraper) GetCaptures(captureNames []string) []captures {
 			Reg:     regexp.MustCompile(`^\d{6}-\d{3}$`),
 			Enable:  true,
 		},
-		{
-			Name:    "1pondo",
-			Scraper: sites.NewPondo1(that.no, DefaultUserAgent, "", that.proxy),
-			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
-			Enable:  true,
-			Desc:    "api接口，但是只能获取5个缩略图有会员限制",
-		},
+
 		{
 			Name:    "DMM",
 			Scraper: sites.NewDmm(that.no, DefaultUserAgent, "", that.proxy),
@@ -126,6 +127,12 @@ func (that *scraper) GetCaptures(captureNames []string) []captures {
 			Name:    "memojav202508",
 			Scraper: sites.NewMemojav202508(that.no, DefaultUserAgent, "coc=1; adc=1", that.proxy),
 			Reg:     regexp.MustCompile(`^([a-zA-Z]{2,6}|[0-9]{3,5}[a-zA-Z]{2,6})-[0-9]{3,4}`),
+			Enable:  true,
+		},
+		{
+			Name:    "JavBus",
+			Scraper: sites.NewJavBus(that.no, viper.GetString("javbus.useragent"), viper.GetString("javbus.cookies"), that.proxy),
+			Reg:     regexp.MustCompile(`^\d{6}_\d{3}$`),
 			Enable:  true,
 		},
 	}
